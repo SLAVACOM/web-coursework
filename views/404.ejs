@@ -1,0 +1,9 @@
+<%- include('partials/header') %>
+
+<div class="error-page">
+  <h1>404</h1>
+  <p><%= typeof message !== 'undefined' ? message : 'Страница не найдена' %></p>
+  <a href="/" class="btn btn--primary">На главную</a>
+</div>
+
+<%- include('partials/footer') %>

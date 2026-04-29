@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Вход — Садовый инвентарь</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="login-body">
+  <div class="login-wrap">
+    <div class="login-card">
+      <div class="login-logo">🌱 Садовый инвентарь</div>
+
+      <% if (error) { %>
+        <div class="alert alert--error"><%= error %></div>
+      <% } %>
+
+      <form action="/login" method="POST">
+        <div class="form-group">
+          <label for="username">Имя пользователя</label>
+          <input id="username" name="username" type="text" required autofocus autocomplete="username">
+        </div>
+        <div class="form-group">
+          <label for="password">Пароль</label>
+          <input id="password" name="password" type="password" required autocomplete="current-password">
+        </div>
+        <button type="submit" class="btn btn--primary btn--full">Войти</button>
+      </form>
+
+      <p class="login-hint">Тестовые аккаунты: admin / sklad / guest (пароль: имя + 123)</p>
+    </div>
+  </div>
+</body>
+</html>

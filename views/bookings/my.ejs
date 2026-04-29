@@ -1,0 +1,57 @@
+<%- include('../partials/header') %>
+
+<div class="page-title">
+  <h1>Мои заявки</h1>
+</div>
+
+<nav class="seg-tabs">
+  <a href="/my-bookings" class="seg-tab <%= filterStatus==='' ? 'active' : '' %>">Все</a>
+  <a href="/my-bookings?status=pending"  class="seg-tab <%= filterStatus==='pending'  ? 'active' : '' %>">Ожидает</a>
+  <a href="/my-bookings?status=approved" class="seg-tab <%= filterStatus==='approved' ? 'active' : '' %>">Одобрено</a>
+  <a href="/my-bookings?status=issued"   class="seg-tab <%= filterStatus==='issued'   ? 'active' : '' %>">Выдано</a>
+  <a href="/my-bookings?status=returned" class="seg-tab <%= filterStatus==='returned' ? 'active' : '' %>">Возвращено</a>
+  <a href="/my-bookings?status=rejected" class="seg-tab <%= filterStatus==='rejected' ? 'active' : '' %>">Отклонено</a>
+</nav>
+
+<% if (bookings.length === 0) { %>
+  <p class="empty">
+    <span class="empty-icon">📋</span>
+    У вас пока нет заявок
+  </p>
+<% } else { %>
+<div class="table-wrap">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Инструмент</th>
+        <th>Кол-во</th>
+        <th>Статус</th>
+        <th>Дата заявки</th>
+        <th>Обновлено</th>
+        <th>Примечание</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% bookings.forEach(b => { %>
+      <tr>
+        <td>
+          <div class="booking-tool">
+            <% if (b.tool_image) { %>
+              <img src="/uploads/<%= b.tool_image %>" class="booking-thumb" alt="">
+            <% } %>
+            <a href="/tools/<%= b.tool_id %>"><%= b.tool_name %></a>
+          </div>
+        </td>
+        <td><%= b.quantity %> шт.</td>
+        <td><span class="status-badge status-badge--<%= b.status %>"><%= statusLabels[b.status] %></span></td>
+        <td><%= new Date(b.created_at).toLocaleDateString('ru-RU') %></td>
+        <td><%= new Date(b.updated_at).toLocaleDateString('ru-RU') %></td>
+        <td class="note-cell"><%= b.note || '—' %></td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+<% } %>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Садовый инвентарь</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a href="/" class="logo">🌱 Садовый инвентарь</a>
+      <nav>
+        <% if (user) { %>
+          <a href="/">Инвентарь</a>
+
+          <% if (user.role === 'admin' || user.role === 'storekeeper') { %>
+            <a href="/categories">Категории</a>
+            <a href="/bookings">Заявки</a>
+            <a href="/tools/new" class="btn btn--primary">+ Добавить</a>
+          <% } %>
+
+          <% if (user.role === 'user') { %>
+            <a href="/my-bookings">Мои заявки</a>
+          <% } %>
+
+          <% if (user.role === 'admin') { %>
+            <a href="/admin/users" class="btn btn--secondary btn--sm">Пользователи</a>
+          <% } %>
+
+          <div class="nav-sep"></div>
+          <div class="user-info">
+            <span class="role-badge role-badge--<%= user.role %>">
+              <%= user.role === 'admin' ? 'Админ' : user.role === 'storekeeper' ? 'Кладовщик' : 'Гость' %>
+            </span>
+            <span class="username"><%= user.username %></span>
+          </div>
+
+          <form action="/logout" method="POST">
+            <button type="submit" class="btn btn--sm">Выйти</button>
+          </form>
+        <% } %>
+      </nav>
+    </div>
+  </header>
+  <main class="container">

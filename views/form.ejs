@@ -1,0 +1,88 @@
+<%- include('partials/header') %>
+
+<div class="page-title">
+  <a href="<%= tool ? '/tools/' + tool.id : '/' %>" class="back-link">← Назад</a>
+  <h1><%= tool ? 'Редактировать: ' + tool.name : 'Новый инструмент' %></h1>
+</div>
+
+<form
+  action="<%= tool ? '/tools/' + tool.id + '/update' : '/tools' %>"
+  method="POST"
+  class="form-card"
+  enctype="multipart/form-data"
+>
+  <div class="form-group">
+    <label for="name">Название *</label>
+    <input id="name" name="name" type="text" required
+           value="<%= tool ? tool.name : '' %>" placeholder="Например: Лопата штыковая">
+  </div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <label for="category_id">Категория</label>
+      <select id="category_id" name="category_id">
+        <option value="">— Без категории —</option>
+        <% categories.forEach(c => { %>
+          <option value="<%= c.id %>" <%= tool && String(tool.category_id) === String(c.id) ? 'selected' : '' %>>
+            <%= c.name %>
+          </option>
+        <% }) %>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="condition">Состояние *</label>
+      <select id="condition" name="condition" required>
+        <% conditions.forEach(cond => { %>
+          <option value="<%= cond %>" <%= tool && tool.condition === cond ? 'selected' : (!tool && cond === 'хорошее' ? 'selected' : '') %>>
+            <%= cond %>
+          </option>
+        <% }) %>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <label for="quantity">Количество *</label>
+      <input id="quantity" name="quantity" type="number" min="0" required
+             value="<%= tool ? tool.quantity : 1 %>">
+    </div>
+
+    <div class="form-group">
+      <label for="price">Стоимость (₽)</label>
+      <input id="price" name="price" type="number" min="0" step="0.01"
+             value="<%= tool && tool.price ? tool.price : '' %>" placeholder="0.00">
+    </div>
+
+    <div class="form-group">
+      <label for="purchase_date">Дата покупки</label>
+      <input id="purchase_date" name="purchase_date" type="date"
+             value="<%= tool && tool.purchase_date ? new Date(tool.purchase_date).toISOString().split('T')[0] : '' %>">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="description">Описание</label>
+    <textarea id="description" name="description" rows="3"
+              placeholder="Краткое описание инструмента"><%= tool ? tool.description || '' : '' %></textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="image">Фотография</label>
+    <% if (tool && tool.image) { %>
+      <img src="/uploads/<%= tool.image %>" class="current-image" alt="Текущее фото">
+      <p class="hint">Загрузите новый файл, чтобы заменить фото</p>
+    <% } %>
+    <input id="image" name="image" type="file" accept=".jpg,.jpeg,.png,.webp">
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" class="btn btn--primary">
+      <%= tool ? 'Сохранить изменения' : 'Добавить' %>
+    </button>
+    <a href="<%= tool ? '/tools/' + tool.id : '/' %>" class="btn">Отмена</a>
+  </div>
+</form>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,109 @@
+<%- include('partials/header') %>
+
+<div class="page-title">
+  <a href="/" class="back-link">← Назад</a>
+  <h1><%= tool.name %></h1>
+</div>
+
+<div class="detail-layout<%= (user && user.role === 'user') ? '' : ' detail-layout--full' %>">
+  <!-- Левая колонка: фото + информация -->
+  <div>
+    <% if (tool.image) { %>
+      <img src="/uploads/<%= tool.image %>" class="detail-img" alt="<%= tool.name %>">
+    <% } else { %>
+      <div class="detail-img-placeholder">🌱</div>
+    <% } %>
+
+    <div class="detail-card">
+      <div class="detail-card__row">
+        <span class="detail-card__label">Категория</span>
+        <span><%= tool.category_name || 'Без категории' %></span>
+      </div>
+      <div class="detail-card__row">
+        <span class="detail-card__label">Состояние</span>
+        <span class="badge badge--<%= tool.condition === 'отличное' ? 'excellent' : tool.condition === 'хорошее' ? 'good' : tool.condition === 'удовлетворительное' ? 'fair' : 'poor' %>">
+          <%= tool.condition %>
+        </span>
+      </div>
+      <div class="detail-card__row">
+        <span class="detail-card__label">Всего</span>
+        <span><%= tool.quantity %> шт.</span>
+      </div>
+      <div class="detail-card__row">
+        <span class="detail-card__label">Доступно</span>
+        <span class="<%= availableQty > 0 ? 'text-green' : 'text-red' %>">
+          <strong><%= availableQty %></strong> шт.
+        </span>
+      </div>
+      <% if (tool.price) { %>
+      <div class="detail-card__row">
+        <span class="detail-card__label">Стоимость</span>
+        <span><%= Number(tool.price).toLocaleString('ru-RU') %> ₽</span>
+      </div>
+      <% } %>
+      <% if (tool.purchase_date) { %>
+      <div class="detail-card__row">
+        <span class="detail-card__label">Дата покупки</span>
+        <span><%= new Date(tool.purchase_date).toLocaleDateString('ru-RU') %></span>
+      </div>
+      <% } %>
+      <% if (tool.description) { %>
+      <div class="detail-card__row detail-card__row--block">
+        <span class="detail-card__label">Описание</span>
+        <p><%= tool.description %></p>
+      </div>
+      <% } %>
+    </div>
+
+    <% if (user && (user.role === 'admin' || user.role === 'storekeeper')) { %>
+    <div class="detail-actions">
+      <a href="/tools/<%= tool.id %>/edit" class="btn btn--primary">Редактировать</a>
+      <form action="/tools/<%= tool.id %>/delete" method="POST"
+            onsubmit="return confirm('Удалить «<%= tool.name %>»?')">
+        <button type="submit" class="btn btn--danger">Удалить</button>
+      </form>
+    </div>
+    <% } %>
+  </div>
+
+  <!-- Правая колонка: бронирование -->
+  <% if (user && user.role === 'user') { %>
+  <div class="booking-section">
+    <h2>Забронировать</h2>
+
+    <% if (flash.error) { %>
+      <div class="alert alert--error"><%= flash.error %></div>
+    <% } %>
+    <% if (flash.success) { %>
+      <div class="alert alert--success"><%= flash.success %></div>
+    <% } %>
+
+    <% if (availableQty > 0) { %>
+      <form action="/bookings" method="POST" class="form-card form-card--compact">
+        <input type="hidden" name="tool_id" value="<%= tool.id %>">
+
+        <div class="form-group">
+          <label for="quantity">Количество <span class="hint-inline">(доступно: <%= availableQty %>)</span></label>
+          <input id="quantity" name="quantity" type="number" min="1" max="<%= availableQty %>" value="1" required>
+        </div>
+
+        <div class="form-group">
+          <label for="note">Примечание</label>
+          <textarea id="note" name="note" rows="3" placeholder="Для каких работ нужен инструмент…"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn--primary btn--full">Забронировать</button>
+      </form>
+    <% } else { %>
+      <div class="unavailable-box">
+        <span class="unavailable-icon">⚠️</span>
+        <p>Весь инвентарь сейчас занят.<br>Попробуйте позже.</p>
+      </div>
+    <% } %>
+
+    <a href="/my-bookings" class="my-bookings-link">→ Мои заявки</a>
+  </div>
+  <% } %>
+</div>
+
+<%- include('partials/footer') %>

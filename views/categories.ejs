@@ -1,0 +1,51 @@
+<%- include('partials/header') %>
+
+<div class="page-title">
+  <h1>Категории</h1>
+</div>
+
+<div class="two-col">
+  <div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Название</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (categories.length === 0) { %>
+          <tr><td colspan="3" class="empty" style="padding:40px 0">Категорий пока нет</td></tr>
+        <% } %>
+        <% categories.forEach(c => { %>
+          <tr>
+            <td><%= c.id %></td>
+            <td><%= c.name %></td>
+            <td>
+              <form action="/categories/<%= c.id %>/delete" method="POST"
+                    onsubmit="return confirm('Удалить категорию «<%= c.name %>»?')">
+                <button type="submit" class="btn btn--sm btn--danger">Удалить</button>
+              </form>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sidebar-panel">
+    <div class="sidebar-panel__title">Добавить категорию</div>
+    <div class="sidebar-panel__body">
+      <form action="/categories" method="POST">
+        <div class="form-group">
+          <label for="name">Название *</label>
+          <input id="name" name="name" type="text" required placeholder="Например: Культиваторы">
+        </div>
+        <button type="submit" class="btn btn--primary btn--full">Добавить</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/footer') %>
