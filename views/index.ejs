@@ -5,7 +5,7 @@
 </div>
 
 <div class="filters">
-  <input id="search" type="text" placeholder="Поиск по названию или описанию…" value="<%= search %>">
+  <input id="search" type="text" placeholder="Поиск…" value="<%= search %>">
   <select id="category-filter">
     <option value="">Все категории</option>
     <% categories.forEach(c => { %>
@@ -14,7 +14,21 @@
       </option>
     <% }) %>
   </select>
+  <select id="condition-filter">
+    <option value="">Все состояния</option>
+    <option value="отличное" <%= condition === 'отличное' ? 'selected' : '' %>>Отличное ⭐</option>
+    <option value="хорошее" <%= condition === 'хорошее' ? 'selected' : '' %>>Хорошее ✓</option>
+    <option value="удовлетворительное" <%= condition === 'удовлетворительное' ? 'selected' : '' %>>Удовлетворительное ⚠️</option>
+    <option value="плохое" <%= condition === 'плохое' ? 'selected' : '' %>>Плохое ✗</option>
+  </select>
+  <select id="sort-filter">
+    <option value="">По названию</option>
+    <option value="quantity" <%= sort === 'quantity' ? 'selected' : '' %>>По количеству</option>
+    <option value="condition" <%= sort === 'condition' ? 'selected' : '' %>>По состоянию</option>
+  </select>
 </div>
+
+<div id="results-info"></div>
 
 <div id="tools-grid">
   <% if (tools.length === 0) { %>

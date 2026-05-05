@@ -8,8 +8,27 @@
 <div class="detail-layout<%= (user && user.role === 'user') ? '' : ' detail-layout--full' %>">
   <!-- Левая колонка: фото + информация -->
   <div>
-    <% if (tool.image) { %>
-      <img src="/uploads/<%= tool.image %>" class="detail-img" alt="<%= tool.name %>">
+    <!-- Галерея изображений -->
+    <% if (tool.images && tool.images.length > 0) { %>
+      <div class="image-gallery">
+        <div class="gallery-main">
+          <img id="main-image" src="/uploads/<%= tool.images[0].filename %>" class="detail-img" alt="<%= tool.name %>">
+          <% if (user && (user.role === 'admin' || user.role === 'storekeeper')) { %>
+            <form action="/tools/<%= tool.id %>/images/<%= tool.images[0].id %>/delete" method="POST" class="image-delete-btn" onsubmit="return confirm('Удалить фото?')">
+              <button type="submit" class="btn btn--sm btn--danger" title="Удалить фото">✕</button>
+            </form>
+          <% } %>
+        </div>
+        <% if (tool.images.length > 1) { %>
+          <div class="gallery-thumbs">
+            <% tool.images.forEach((img, idx) => { %>
+              <div class="gallery-thumb-item">
+                <img src="/uploads/<%= img.filename %>" class="gallery-thumb" data-filename="<%= img.filename %>" data-image-id="<%= img.id %>" alt="<%= tool.name %> фото <%= idx + 1 %>">
+              </div>
+            <% }) %>
+          </div>
+        <% } %>
+      </div>
     <% } else { %>
       <div class="detail-img-placeholder">🌱</div>
     <% } %>

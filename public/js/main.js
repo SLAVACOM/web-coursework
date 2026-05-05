@@ -9,10 +9,14 @@ $(function () {
   const canEdit = ['admin', 'storekeeper'].includes(window.APP_ROLE);
 
   function renderTools(tools) {
-    if (!tools.length) {
+    const count = tools.length;
+    if (count === 0) {
+      $('#results-info').html('');
       $('#tools-grid').html('<p class="empty"><span class="empty-icon">🔍</span>Инвентарь не найден</p>');
       return;
     }
+
+    $('#results-info').html(`<div class="results-info">Найдено: <strong>${count}</strong> товар${count % 10 === 1 && count % 100 !== 11 ? '' : count % 10 === 2 || count % 10 === 3 || count % 10 === 4 ? 'а' : 'ов'}</div>`);
 
     const cards = tools.map(t => {
       const cls    = CONDITION_CLASS[t.condition] || 'good';
@@ -50,6 +54,8 @@ $(function () {
     $.getJSON('/api/tools', {
       search:      $('#search').val().trim(),
       category_id: $('#category-filter').val(),
+      condition:   $('#condition-filter').val(),
+      sort:        $('#sort-filter').val(),
     }, renderTools);
   }
 
@@ -60,4 +66,25 @@ $(function () {
   });
 
   $('#category-filter').on('change', loadTools);
+  $('#condition-filter').on('change', loadTools);
+  $('#sort-filter').on('change', loadTools);
+
+  // Image gallery thumbnail switching
+  $('.gallery-thumb').on('click', function () {
+    const filename = $(this).data('filename');
+    const imageId = $(this).data('image-id');
+
+    $('#main-image').attr('src', '/uploads/' + filename);
+    $('.gallery-thumb').removeClass('active');
+    $(this).addClass('active');
+
+    // Update delete button
+    const deleteForm = $('.image-delete-btn form');
+    if (deleteForm.length) {
+      deleteForm.attr('action', `/tools/${deleteForm.attr('action').split('/')[2]}/images/${imageId}/delete`);
+    }
+  });
+
+  // Mark first thumbnail as active
+  $('.gallery-thumb').first().addClass('active');
 });

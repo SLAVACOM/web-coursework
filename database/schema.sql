@@ -27,8 +27,17 @@ CREATE TABLE IF NOT EXISTS tools (
   purchase_date DATE,
   price         DECIMAL(10,2),
   description   TEXT,
-  image         VARCHAR(255) DEFAULT NULL,
+  created_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS tool_images (
+  id        INT AUTO_INCREMENT PRIMARY KEY,
+  tool_id   INT NOT NULL,
+  filename  VARCHAR(255) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (tool_id) REFERENCES tools(id) ON DELETE CASCADE,
+  INDEX (tool_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE IF NOT EXISTS bookings (

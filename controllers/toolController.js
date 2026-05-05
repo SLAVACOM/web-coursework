@@ -6,12 +6,12 @@ const CONDITIONS = ['отличное', 'хорошее', 'удовлетвор�
 
 async function index(req, res, next) {
   try {
-    const { search = '', category_id = '' } = req.query;
+    const { search = '', category_id = '', condition = '', sort = '' } = req.query;
     const [tools, categories] = await Promise.all([
-      toolModel.getAll({ search, category_id }),
+      toolModel.getAll({ search, category_id, condition, sort }),
       categoryModel.getAll(),
     ]);
-    res.render('index', { tools, categories, search, category_id });
+    res.render('index', { tools, categories, search, category_id, condition, sort });
   } catch (err) { next(err); }
 }
 
@@ -39,9 +39,14 @@ async function newForm(req, res, next) {
 
 async function create(req, res, next) {
   try {
-    const data = { ...req.body };
-    if (req.file) data.image = req.file.filename;
-    const id = await toolModel.create(data);
+    const id = await toolModel.create(req.body);
+
+    if (req.files && req.files.length) {
+      for (const file of req.files) {
+        await toolModel.addImage(id, file.filename);
+      }
+    }
+
     res.redirect(`/tools/${id}`);
   } catch (err) { next(err); }
 }
@@ -59,9 +64,14 @@ async function editForm(req, res, next) {
 
 async function update(req, res, next) {
   try {
-    const data = { ...req.body };
-    if (req.file) data.image = req.file.filename;
-    await toolModel.update(req.params.id, data);
+    await toolModel.update(req.params.id, req.body);
+
+    if (req.files && req.files.length) {
+      for (const file of req.files) {
+        await toolModel.addImage(req.params.id, file.filename);
+      }
+    }
+
     res.redirect(`/tools/${req.params.id}`);
   } catch (err) { next(err); }
 }
@@ -73,6 +83,18 @@ async function remove(req, res, next) {
   } catch (err) { next(err); }
 }
 
+async function removeImage(req, res, next) {
+  try {
+    const filename = await toolModel.removeImage(req.params.imageId);
+    if (filename) {
+      const fs = require('fs');
+      const path = require('path');
+      fs.unlink(path.join(__dirname, '../public/uploads/', filename), () => {});
+    }
+    res.redirect(`/tools/${req.params.id}`);
+  } catch (err) { next(err); }
+}
+
 async function apiSearch(req, res, next) {
   try {
     const tools = await toolModel.getAll(req.query);
@@ -80,4 +102,4 @@ async function apiSearch(req, res, next) {
   } catch (err) { next(err); }
 }
 
-module.exports = { index, show, newForm, create, editForm, update, remove, apiSearch };
+module.exports = { index, show, newForm, create, editForm, update, remove, removeImage, apiSearch };
