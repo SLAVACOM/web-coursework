@@ -69,9 +69,31 @@
   </div>
 
   <div class="form-group">
-    <label for="images">Фотографии (до 10 файлов)</label>
-    <p class="hint">Выберите одно или несколько изображений для добавления</p>
-    <input id="images" name="images" type="file" accept=".jpg,.jpeg,.png,.webp" multiple>
+    <label>Фотографии</label>
+
+    <% if (tool && tool.images && tool.images.length > 0) { %>
+    <div class="existing-images">
+      <p class="hint">Существующие фотографии (перетащи для переупорядочивания)</p>
+      <div id="existingImagesPreview" class="images-preview">
+        <% tool.images.forEach((img, idx) => { %>
+          <div class="image-preview-item existing-image" draggable="true" data-image-id="<%= img.id %>" data-index="<%= idx %>">
+            <img src="/uploads/<%= img.filename %>" alt="Фото <%= idx + 1 %>">
+            <button type="button" class="image-preview-remove delete-existing" data-image-id="<%= img.id %>">×</button>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+    <% } %>
+
+    <p class="hint">Выберите одно или несколько новых изображений для добавления</p>
+    <div class="image-upload-area">
+      <input id="images" name="images" type="file" accept=".jpg,.jpeg,.png,.webp" multiple class="file-input-images">
+      <div class="upload-prompt">
+        <span class="upload-icon">📸</span>
+        <p>Нажми для выбора файлов или перетащи сюда</p>
+      </div>
+    </div>
+    <div id="imagesPreview" class="images-preview"></div>
   </div>
 
   <div class="form-actions">

@@ -1,9 +1,12 @@
+const log = require('../utils/logger');
 const db = require('../config/db');
 
 async function getAll({ status } = {}) {
+  log.db(`Получение списка бронирований`, { status: status || 'все' });
   let sql = `
     SELECT b.*, u.username,
-           t.name AS tool_name, t.image AS tool_image
+           t.name AS tool_name,
+           (SELECT filename FROM tool_images WHERE tool_id = t.id ORDER BY created_at LIMIT 1) AS tool_image
     FROM bookings b
     JOIN users u ON b.user_id = u.id
     JOIN tools  t ON b.tool_id = t.id
@@ -13,12 +16,15 @@ async function getAll({ status } = {}) {
   if (status) { sql += ' AND b.status = ?'; params.push(status); }
   sql += ' ORDER BY b.created_at DESC';
   const [rows] = await db.execute(sql, params);
+  log.success(`Получено ${rows.length} бронирований`);
   return rows;
 }
 
 async function getByUser(userId, { status } = {}) {
+  log.db(`Получение бронирований пользователя ${userId}`, { status: status || 'все' });
   let sql = `
-    SELECT b.*, t.name AS tool_name, t.image AS tool_image
+    SELECT b.*, t.name AS tool_name,
+           (SELECT filename FROM tool_images WHERE tool_id = t.id ORDER BY created_at LIMIT 1) AS tool_image
     FROM bookings b
     JOIN tools t ON b.tool_id = t.id
     WHERE b.user_id = ?
@@ -27,6 +33,7 @@ async function getByUser(userId, { status } = {}) {
   if (status) { sql += ' AND b.status = ?'; params.push(status); }
   sql += ' ORDER BY b.created_at DESC';
   const [rows] = await db.execute(sql, params);
+  log.success(`Получено ${rows.length} бронирований для пользователя ${userId}`);
   return rows;
 }
 
@@ -43,13 +50,16 @@ async function updateStatus(id, status) {
 }
 
 async function getActiveQuantity(tool_id) {
+  log.db(`Получение активного количества бронирований для инструмента ${tool_id}`);
   const [rows] = await db.execute(
     `SELECT COALESCE(SUM(quantity), 0) AS total
      FROM bookings
      WHERE tool_id = ? AND status IN ('approved', 'issued')`,
     [tool_id]
   );
-  return Number(rows[0].total);
+  const total = Number(rows[0].total);
+  log.success(`Активное количество бронирований для инструмента ${tool_id}: ${total}`);
+  return total;
 }
 
 module.exports = { getAll, getByUser, create, updateStatus, getActiveQuantity };

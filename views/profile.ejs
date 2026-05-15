@@ -1,0 +1,224 @@
+<%- include('partials/header') %>
+
+<div class="page-title">
+  <a href="/" class="back-link">← Назад</a>
+  <h1>Мой профиль</h1>
+</div>
+
+<!-- Модальное окно редактирования профиля -->
+<div class="modal" id="editProfileModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Редактировать профиль</h2>
+      <button type="button" class="modal-close" id="closeModalBtn">&times;</button>
+    </div>
+    <div class="modal-body">
+      <form action="/profile/update" method="POST" enctype="multipart/form-data" class="profile-form">
+        <div class="form-group">
+          <label for="photo">Фотография профиля</label>
+          <div class="photo-upload">
+            <div id="photoPreviewContainer">
+              <% if (user.photo) { %>
+                <img src="/uploads/<%= user.photo %>" alt="Текущее фото" class="current-profile-photo" id="photoPreview">
+              <% } else { %>
+                <div class="photo-placeholder">📷</div>
+              <% } %>
+            </div>
+            <input type="file" id="photo" name="photo" accept="image/*" class="file-input">
+            <label for="photo" class="file-label">Выбрать фотографию</label>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="first_name">Имя</label>
+            <input type="text" id="first_name" name="first_name" value="<%= user.first_name || '' %>" placeholder="Иван">
+          </div>
+          <div class="form-group">
+            <label for="last_name">Фамилия</label>
+            <input type="text" id="last_name" name="last_name" value="<%= user.last_name || '' %>" placeholder="Иванов">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="gender">Пол</label>
+            <select id="gender" name="gender">
+              <option value="">Не указано</option>
+              <option value="М" <% if (user.gender === 'М') { %>selected<% } %>>Мужской</option>
+              <option value="Ж" <% if (user.gender === 'Ж') { %>selected<% } %>>Женский</option>
+              <option value="Другое" <% if (user.gender === 'Другое') { %>selected<% } %>>Другое</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="phone">Телефон</label>
+            <input type="tel" id="phone" name="phone" value="<%= user.phone || '' %>" placeholder="+7 (999) 000-00-00">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="department">Отдел</label>
+          <input type="text" id="department" name="department" value="<%= user.department || '' %>" placeholder="Ваш отдел">
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn--primary btn--full">Сохранить изменения</button>
+          <button type="button" class="btn btn--secondary btn--full" id="cancelEditBtn">Отмена</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="profile-layout">
+
+  <!-- Основная информация -->
+  <div class="profile-card">
+    <div class="profile-section">
+      <div class="profile-avatar">
+        <% if (user.photo) { %>
+          <img src="/uploads/<%= user.photo %>" alt="<%= user.username %>" class="profile-avatar-img">
+        <% } else { %>
+          <% const initial = user.username.charAt(0).toUpperCase(); %>
+          <%= initial %>
+        <% } %>
+      </div>
+      <div class="profile-info">
+        <h2><%= user.first_name && user.last_name ? user.first_name + ' ' + user.last_name : user.username %></h2>
+        <p class="profile-username"><%= user.username %></p>
+        <p class="profile-role">
+          <span class="badge badge--<%= user.role === 'admin' ? 'excellent' : user.role === 'storekeeper' ? 'good' : 'fair' %>">
+            <%= user.role === 'admin' ? 'Администратор' : user.role === 'storekeeper' ? 'Кладовщик' : 'Пользователь' %>
+          </span>
+        </p>
+      </div>
+    </div>
+
+    <div class="profile-row">
+      <span class="profile-label">Имя пользователя</span>
+      <span class="profile-value"><%= user.username %></span>
+    </div>
+
+    <% if (user.first_name || user.last_name) { %>
+    <div class="profile-row">
+      <span class="profile-label">ФИО</span>
+      <span class="profile-value"><%= (user.first_name || '') + ' ' + (user.last_name || '') %></span>
+    </div>
+    <% } %>
+
+    <% if (user.gender) { %>
+    <div class="profile-row">
+      <span class="profile-label">Пол</span>
+      <span class="profile-value"><%= user.gender === 'М' ? 'Мужской' : user.gender === 'Ж' ? 'Женский' : 'Другое' %></span>
+    </div>
+    <% } %>
+
+    <% if (user.phone) { %>
+    <div class="profile-row">
+      <span class="profile-label">Телефон</span>
+      <span class="profile-value"><%= user.phone %></span>
+    </div>
+    <% } %>
+
+    <% if (user.department) { %>
+    <div class="profile-row">
+      <span class="profile-label">Отдел</span>
+      <span class="profile-value"><%= user.department %></span>
+    </div>
+    <% } %>
+
+    <div class="profile-row">
+      <span class="profile-label">Роль</span>
+      <span class="profile-value">
+        <% if (user.role === 'admin') { %>
+          Администратор (полный доступ)
+        <% } else if (user.role === 'storekeeper') { %>
+          Кладовщик (управление инвентарём)
+        <% } else { %>
+          Пользователь (просмотр и бронирование)
+        <% } %>
+      </span>
+    </div>
+
+    <div class="profile-row">
+      <span class="profile-label">Зарегистрирован</span>
+      <span class="profile-value"><%= new Date(user.created_at).toLocaleDateString('ru-RU') %></span>
+    </div>
+
+    <div class="profile-actions">
+      <button type="button" class="btn btn--primary" id="editProfileBtn">Редактировать профиль</button>
+      <form action="/logout" method="POST" style="margin-top: 10px;">
+        <button type="submit" class="btn btn--danger btn--full">Выйти из аккаунта</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- История работ (бронирований) -->
+  <div class="history-card">
+    <h3>История бронирований</h3>
+    <% if (bookings && bookings.length > 0) { %>
+      <div class="history-list">
+        <% bookings.forEach(booking => { %>
+          <div class="history-item">
+            <div class="history-item-header">
+              <span class="history-item-tool"><strong><%= booking.tool_name %></strong></span>
+              <span class="status-badge status-badge--<%= booking.status %>"><%= statusLabels[booking.status] %></span>
+            </div>
+            <div class="history-item-details">
+              <span>Количество: <strong><%= booking.quantity %></strong> шт.</span>
+              <span>Дата: <strong><%= new Date(booking.created_at).toLocaleDateString('ru-RU') %></strong></span>
+              <% if (booking.note) { %>
+                <span class="history-item-note">Примечание: <%= booking.note %></span>
+              <% } %>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    <% } else { %>
+      <p class="empty-message">История бронирований пуста</p>
+    <% } %>
+  </div>
+</div>
+
+<%- include('partials/footer') %>
+
+<script>
+  // Модальное окно
+  const editProfileBtn = document.getElementById('editProfileBtn');
+  const cancelEditBtn = document.getElementById('cancelEditBtn');
+  const closeModalBtn = document.getElementById('closeModalBtn');
+  const editProfileModal = document.getElementById('editProfileModal');
+
+  editProfileBtn.addEventListener('click', () => {
+    editProfileModal.style.display = 'block';
+  });
+
+  cancelEditBtn.addEventListener('click', () => {
+    editProfileModal.style.display = 'none';
+  });
+
+  closeModalBtn.addEventListener('click', () => {
+    editProfileModal.style.display = 'none';
+  });
+
+  window.addEventListener('click', (e) => {
+    if (e.target === editProfileModal) {
+      editProfileModal.style.display = 'none';
+    }
+  });
+
+  // Превью фотографии
+  const photoInput = document.getElementById('photo');
+  const photoPreviewContainer = document.getElementById('photoPreviewContainer');
+
+  photoInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (file && file.type.startsWith('image/')) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        photoPreviewContainer.innerHTML = `<img src="${event.target.result}" alt="Превью" class="current-profile-photo" id="photoPreview">`;
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+</script>

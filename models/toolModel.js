@@ -1,6 +1,8 @@
+const log = require('../utils/logger');
 const db = require('../config/db');
 
 async function getAll({ search, category_id, condition, sort } = {}) {
+  log.db(`Получение списка инструментов`, { search, category_id, condition, sort });
   let sql = `
     SELECT t.*, c.name AS category_name,
            (SELECT filename FROM tool_images WHERE tool_id = t.id ORDER BY created_at LIMIT 1) AS image
@@ -32,10 +34,12 @@ async function getAll({ search, category_id, condition, sort } = {}) {
   }
 
   const [rows] = await db.execute(sql, params);
+  log.success(`Получено ${rows.length} инструментов`);
   return rows;
 }
 
 async function getById(id) {
+  log.db(`Получение инструмента по id: ${id}`);
   const [toolRows] = await db.execute(
     `SELECT t.*, c.name AS category_name
      FROM tools t
@@ -51,6 +55,7 @@ async function getById(id) {
     [id]
   );
   tool.images = imageRows;
+  log.success(`Инструмент ${id} загружен с ${imageRows.length} изображениями`);
   return tool;
 }
 

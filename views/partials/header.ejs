@@ -29,12 +29,12 @@
           <% } %>
 
           <div class="nav-sep"></div>
-          <div class="user-info">
+          <a href="/profile" class="user-info user-info--link">
             <span class="role-badge role-badge--<%= user.role %>">
               <%= user.role === 'admin' ? 'Админ' : user.role === 'storekeeper' ? 'Кладовщик' : 'Гость' %>
             </span>
             <span class="username"><%= user.username %></span>
-          </div>
+          </a>
 
           <form action="/logout" method="POST">
             <button type="submit" class="btn btn--sm">Выйти</button>

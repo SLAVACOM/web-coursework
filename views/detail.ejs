@@ -13,6 +13,11 @@
       <div class="image-gallery">
         <div class="gallery-main">
           <img id="main-image" src="/uploads/<%= tool.images[0].filename %>" class="detail-img" alt="<%= tool.name %>">
+          <% if (tool.images.length > 1) { %>
+            <button class="gallery-nav gallery-nav--prev" id="gallery-prev" title="Предыдущее фото (←)">‹</button>
+            <button class="gallery-nav gallery-nav--next" id="gallery-next" title="Следующее фото (→)">›</button>
+            <div class="gallery-counter"><span id="gallery-current">1</span> / <span id="gallery-total"><%= tool.images.length %></span></div>
+          <% } %>
           <% if (user && (user.role === 'admin' || user.role === 'storekeeper')) { %>
             <form action="/tools/<%= tool.id %>/images/<%= tool.images[0].id %>/delete" method="POST" class="image-delete-btn" onsubmit="return confirm('Удалить фото?')">
               <button type="submit" class="btn btn--sm btn--danger" title="Удалить фото">✕</button>
@@ -20,10 +25,13 @@
           <% } %>
         </div>
         <% if (tool.images.length > 1) { %>
-          <div class="gallery-thumbs">
+          <div class="gallery-thumbs" id="galleryThumbs">
             <% tool.images.forEach((img, idx) => { %>
-              <div class="gallery-thumb-item">
-                <img src="/uploads/<%= img.filename %>" class="gallery-thumb" data-filename="<%= img.filename %>" data-image-id="<%= img.id %>" alt="<%= tool.name %> фото <%= idx + 1 %>">
+              <div class="gallery-thumb-item" draggable="true" data-image-id="<%= img.id %>">
+                <img src="/uploads/<%= img.filename %>" class="gallery-thumb" data-filename="<%= img.filename %>" data-image-id="<%= img.id %>" data-index="<%= idx %>" alt="<%= tool.name %> фото <%= idx + 1 %>">
+                <% if (user && (user.role === 'admin' || user.role === 'storekeeper')) { %>
+                  <div class="gallery-thumb-drag-hint">≡</div>
+                <% } %>
               </div>
             <% }) %>
           </div>

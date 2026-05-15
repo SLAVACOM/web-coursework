@@ -9,6 +9,12 @@ CREATE TABLE IF NOT EXISTS users (
   username   VARCHAR(50)  NOT NULL UNIQUE,
   password   VARCHAR(255) NOT NULL,
   role       ENUM('admin','storekeeper','user') NOT NULL DEFAULT 'user',
+  first_name VARCHAR(100),
+  last_name  VARCHAR(100),
+  gender     ENUM('М','Ж','Другое'),
+  department VARCHAR(100),
+  phone      VARCHAR(20),
+  photo      VARCHAR(255),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
