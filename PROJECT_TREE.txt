@@ -1,0 +1,67 @@
+﻿.
+|-- config/
+|   +-- db.js
+|-- controllers/
+|   |-- adminController.js
+|   |-- authController.js
+|   |-- bookingController.js
+|   |-- categoryController.js
+|   +-- toolController.js
+|-- database/
+|   +-- schema.sql
+|-- docs/
+|   |-- erd.drawio
+|   |-- panels.drawio
+|   |-- POYASNITELNAYA_ZAPISKA.md
+|   |-- schemas.drawio
+|   +-- uml_classes.puml
+|-- middleware/
+|   |-- auth.js
+|   +-- upload.js
+|-- models/
+|   |-- analyticsModel.js
+|   |-- bookingModel.js
+|   |-- categoryModel.js
+|   |-- toolModel.js
+|   +-- userModel.js
+|-- public/
+|   |-- css/
+|   |   +-- style.css
+|   |-- js/
+|   |   +-- main.js
+|   +-- uploads/
+|-- routes/
+|   |-- adminRoutes.js
+|   |-- authRoutes.js
+|   |-- bookingRoutes.js
+|   |-- categoryRoutes.js
+|   +-- toolRoutes.js
+|-- scripts/
+|   |-- seedDatabase.js
+|   +-- seed-users.js
+|-- test/
+|   +-- tool.test.js
+|-- utils/
+|   +-- logger.js
+|-- views/
+|   |-- admin/
+|   |   |-- analytics.ejs
+|   |   +-- users.ejs
+|   |-- bookings/
+|   |   |-- list.ejs
+|   |   +-- my.ejs
+|   |-- partials/
+|   |   |-- footer.ejs
+|   |   +-- header.ejs
+|   |-- 403.ejs
+|   |-- 404.ejs
+|   |-- categories.ejs
+|   |-- detail.ejs
+|   |-- form.ejs
+|   |-- index.ejs
+|   |-- login.ejs
+|   +-- profile.ejs
+|-- .env.example
+|-- app.js
+|-- package.json
+|-- package-lock.json

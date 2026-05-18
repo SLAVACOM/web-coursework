@@ -1,0 +1,174 @@
+<mxfile host="app.diagrams.net">
+  <diagram id="erd_garden" name="ER-диаграмма">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- TITLE -->
+        <mxCell id="title" value="Диаграмма взаимосвязей схем данных" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="280" y="755" width="600" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="leg_pk" value="PK — первичный ключ" style="text;html=1;strokeColor=#d6b656;fillColor=#fff2cc;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=11;spacingLeft=6;" vertex="1" parent="1">
+          <mxGeometry x="20" y="755" width="180" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="leg_fk" value="FK — внешний ключ" style="text;html=1;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=1;fontSize=11;spacingLeft=6;" vertex="1" parent="1">
+          <mxGeometry x="20" y="787" width="180" height="26" as="geometry" />
+        </mxCell>
+
+        <!-- ===== TABLE: categories (x=330, y=20, w=220, h=86) ===== -->
+        <mxCell id="tbl_cat" value="categories" style="shape=table;startSize=30;container=1;collapsible=0;childLayout=tableLayout;align=center;resizeLast=1;fontSize=13;fontStyle=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="330" y="20" width="220" height="86" as="geometry" />
+        </mxCell>
+        <mxCell id="cat_id" value="PK  id : INT" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=#fff2cc;strokeColor=#d6b656;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;fontStyle=1;" vertex="1" parent="tbl_cat">
+          <mxGeometry y="30" width="220" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="cat_name" value="name : VARCHAR(100)" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;strokeColor=#d6d6d6;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;" vertex="1" parent="tbl_cat">
+          <mxGeometry y="58" width="220" height="28" as="geometry" />
+        </mxCell>
+
+        <!-- ===== TABLE: tools (x=300, y=175, w=260, h=282) ===== -->
+        <mxCell id="tbl_tools" value="tools" style="shape=table;startSize=30;container=1;collapsible=0;childLayout=tableLayout;align=center;resizeLast=1;fontSize=13;fontStyle=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="300" y="175" width="260" height="282" as="geometry" />
+        </mxCell>
+        <mxCell id="tools_id" value="PK  id : INT" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=#fff2cc;strokeColor=#d6b656;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;fontStyle=1;" vertex="1" parent="tbl_tools">
+          <mxGeometry y="30" width="260" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="tools_name" value="name : VARCHAR(150)" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;strokeColor=#d6d6d6;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;" vertex="1" parent="tbl_tools">
+          <mxGeometry y="58" width="260" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="tools_cat_id" value="FK  category_id : INT" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=#dae8fc;strokeColor=#6c8ebf;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;" vertex="1" parent="tbl_tools">
+          <mxGeometry y="86" width="260" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="tools_qty" value="quantity : INT DEFAULT 1" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;strokeColor=#d6d6d6;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;" vertex="1" parent="tbl_tools">
+          <mxGeometry y="114" width="260" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="tools_cond" value="condition : ENUM" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;strokeColor=#d6d6d6;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;" vertex="1" parent="tbl_tools">
+          <mxGeometry y="142" width="260" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="tools_date" value="purchase_date : DATE" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;strokeColor=#d6d6d6;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;" vertex="1" parent="tbl_tools">
+          <mxGeometry y="170" width="260" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="tools_price" value="price : DECIMAL(10,2)" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;strokeColor=#d6d6d6;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;" vertex="1" parent="tbl_tools">
+          <mxGeometry y="198" width="260" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="tools_desc" value="description : TEXT" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;strokeColor=#d6d6d6;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;" vertex="1" parent="tbl_tools">
+          <mxGeometry y="226" width="260" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="tools_created" value="created_at : TIMESTAMP" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;strokeColor=#d6d6d6;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;" vertex="1" parent="tbl_tools">
+          <mxGeometry y="254" width="260" height="28" as="geometry" />
+        </mxCell>
+
+        <!-- ===== TABLE: tool_images (x=20, y=220, w=240, h=142) ===== -->
+        <mxCell id="tbl_imgs" value="tool_images" style="shape=table;startSize=30;container=1;collapsible=0;childLayout=tableLayout;align=center;resizeLast=1;fontSize=13;fontStyle=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="20" y="220" width="240" height="142" as="geometry" />
+        </mxCell>
+        <mxCell id="imgs_id" value="PK  id : INT" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=#fff2cc;strokeColor=#d6b656;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;fontStyle=1;" vertex="1" parent="tbl_imgs">
+          <mxGeometry y="30" width="240" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="imgs_tool_id" value="FK  tool_id : INT CASCADE" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=#dae8fc;strokeColor=#6c8ebf;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;" vertex="1" parent="tbl_imgs">
+          <mxGeometry y="58" width="240" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="imgs_filename" value="filename : VARCHAR(255)" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;strokeColor=#d6d6d6;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;" vertex="1" parent="tbl_imgs">
+          <mxGeometry y="86" width="240" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="imgs_created" value="created_at : TIMESTAMP" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;strokeColor=#d6d6d6;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;" vertex="1" parent="tbl_imgs">
+          <mxGeometry y="114" width="240" height="28" as="geometry" />
+        </mxCell>
+
+        <!-- ===== TABLE: users (x=880, y=20, w=260, h=366) ===== -->
+        <mxCell id="tbl_users" value="users" style="shape=table;startSize=30;container=1;collapsible=0;childLayout=tableLayout;align=center;resizeLast=1;fontSize=13;fontStyle=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="880" y="20" width="260" height="366" as="geometry" />
+        </mxCell>
+        <mxCell id="users_id" value="PK  id : INT" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=#fff2cc;strokeColor=#d6b656;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;fontStyle=1;" vertex="1" parent="tbl_users">
+          <mxGeometry y="30" width="260" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="users_uname" value="username : VARCHAR(50) UNIQUE" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;strokeColor=#d6d6d6;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;" vertex="1" parent="tbl_users">
+          <mxGeometry y="58" width="260" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="users_pwd" value="password : VARCHAR(255)" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;strokeColor=#d6d6d6;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;" vertex="1" parent="tbl_users">
+          <mxGeometry y="86" width="260" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="users_role" value="role : ENUM(admin,storekeeper,user)" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;strokeColor=#d6d6d6;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;" vertex="1" parent="tbl_users">
+          <mxGeometry y="114" width="260" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="users_super" value="is_super_admin : BOOLEAN" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;strokeColor=#d6d6d6;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;" vertex="1" parent="tbl_users">
+          <mxGeometry y="142" width="260" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="users_fn" value="first_name : VARCHAR(100)" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;strokeColor=#d6d6d6;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;" vertex="1" parent="tbl_users">
+          <mxGeometry y="170" width="260" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="users_ln" value="last_name : VARCHAR(100)" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;strokeColor=#d6d6d6;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;" vertex="1" parent="tbl_users">
+          <mxGeometry y="198" width="260" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="users_gender" value="gender : ENUM(М,Ж,Другое)" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;strokeColor=#d6d6d6;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;" vertex="1" parent="tbl_users">
+          <mxGeometry y="226" width="260" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="users_dept" value="department : VARCHAR(100)" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;strokeColor=#d6d6d6;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;" vertex="1" parent="tbl_users">
+          <mxGeometry y="254" width="260" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="users_phone" value="phone : VARCHAR(20)" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;strokeColor=#d6d6d6;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;" vertex="1" parent="tbl_users">
+          <mxGeometry y="282" width="260" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="users_photo" value="photo : VARCHAR(255)" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;strokeColor=#d6d6d6;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;" vertex="1" parent="tbl_users">
+          <mxGeometry y="310" width="260" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="users_created" value="created_at : TIMESTAMP" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;strokeColor=#d6d6d6;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;" vertex="1" parent="tbl_users">
+          <mxGeometry y="338" width="260" height="28" as="geometry" />
+        </mxCell>
+
+        <!-- ===== TABLE: bookings (x=570, y=480, w=280, h=254) ===== -->
+        <mxCell id="tbl_book" value="bookings" style="shape=table;startSize=30;container=1;collapsible=0;childLayout=tableLayout;align=center;resizeLast=1;fontSize=13;fontStyle=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="570" y="480" width="280" height="254" as="geometry" />
+        </mxCell>
+        <mxCell id="book_id" value="PK  id : INT" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=#fff2cc;strokeColor=#d6b656;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;fontStyle=1;" vertex="1" parent="tbl_book">
+          <mxGeometry y="30" width="280" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="book_uid" value="FK  user_id : INT CASCADE" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=#dae8fc;strokeColor=#6c8ebf;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;" vertex="1" parent="tbl_book">
+          <mxGeometry y="58" width="280" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="book_tid" value="FK  tool_id : INT CASCADE" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=#dae8fc;strokeColor=#6c8ebf;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;" vertex="1" parent="tbl_book">
+          <mxGeometry y="86" width="280" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="book_qty" value="quantity : INT DEFAULT 1" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;strokeColor=#d6d6d6;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;" vertex="1" parent="tbl_book">
+          <mxGeometry y="114" width="280" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="book_status" value="status : ENUM(5 статусов)" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;strokeColor=#d6d6d6;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;" vertex="1" parent="tbl_book">
+          <mxGeometry y="142" width="280" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="book_note" value="note : TEXT" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;strokeColor=#d6d6d6;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;" vertex="1" parent="tbl_book">
+          <mxGeometry y="170" width="280" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="book_created" value="created_at : TIMESTAMP" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;strokeColor=#d6d6d6;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;" vertex="1" parent="tbl_book">
+          <mxGeometry y="198" width="280" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="book_updated" value="updated_at : TIMESTAMP" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;strokeColor=#d6d6d6;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=11;" vertex="1" parent="tbl_book">
+          <mxGeometry y="226" width="280" height="28" as="geometry" />
+        </mxCell>
+
+        <!-- ===== RELATIONSHIPS ===== -->
+
+        <!-- 1. categories (1) → tools (N) -->
+        <mxCell id="rel_cat_tools" value="1 : N" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#6c8ebf;endArrow=ERmanyToOne;endFill=0;startArrow=ERone;startFill=0;fontSize=11;fontStyle=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" source="tbl_cat" target="tbl_tools" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- 2. tools (1) → tool_images (N) -->
+        <mxCell id="rel_tools_imgs" value="1 : N" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#82b366;endArrow=ERmanyToOne;endFill=0;startArrow=ERone;startFill=0;fontSize=11;fontStyle=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" source="tools_id" target="imgs_tool_id" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- 3. users (1) → bookings (N) -->
+        <mxCell id="rel_users_book" value="1 : N" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#9673a6;endArrow=ERmanyToOne;endFill=0;startArrow=ERone;startFill=0;fontSize=11;fontStyle=1;exitX=0;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" source="users_id" target="book_uid" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- 4. tools (1) → bookings (N) -->
+        <mxCell id="rel_tools_book" value="1 : N" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeWidth=2;strokeColor=#82b366;endArrow=ERmanyToOne;endFill=0;startArrow=ERone;startFill=0;fontSize=11;fontStyle=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" source="tools_id" target="book_tid" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
