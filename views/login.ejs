@@ -4,30 +4,57 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Вход — Садовый инвентарь</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body class="login-body">
   <div class="login-wrap">
     <div class="login-card">
-      <div class="login-logo">🌱 Садовый инвентарь</div>
+      <div class="login-logo">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -7px; margin-right: 6px; color: var(--green);">
+          <path d="M12 2a9 9 0 0 0-9 9c0 3.86 2.42 7.14 5.84 8.43.34.13.71.2 1.08.23"/>
+          <path d="M12 2a9 9 0 0 1 9 9c0 3.86-2.42 7.14-5.84 8.43-.34.13-.71.2-1.08.23"/>
+          <path d="M12 2v20"/>
+          <path d="M12 11c-2 0-4-2-4-4"/>
+          <path d="M12 11c2 0 4-2 4-4"/>
+        </svg>
+        Садовый инвентарь
+      </div>
+      <div class="login-subtitle">Войдите, чтобы продолжить</div>
 
       <% if (error) { %>
-        <div class="alert alert--error"><%= error %></div>
+        <div class="alert alert--error">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="12"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+          <%= error %>
+        </div>
       <% } %>
 
       <form action="/login" method="POST">
         <div class="form-group">
           <label for="username">Имя пользователя</label>
-          <input id="username" name="username" type="text" required autofocus autocomplete="username">
+          <input id="username" name="username" type="text" required autofocus autocomplete="username" placeholder="Введите логин">
         </div>
         <div class="form-group">
           <label for="password">Пароль</label>
-          <input id="password" name="password" type="password" required autocomplete="current-password">
+          <input id="password" name="password" type="password" required autocomplete="current-password" placeholder="••••••••">
         </div>
-        <button type="submit" class="btn btn--primary btn--full">Войти</button>
+        <button type="submit" class="btn btn--primary btn--full">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+            <polyline points="10 17 15 12 10 7"/>
+            <line x1="15" y1="12" x2="3" y2="12"/>
+          </svg>
+          Войти
+        </button>
       </form>
 
-      <p class="login-hint">Тестовые аккаунты: admin / sklad / guest (пароль: имя + 123)</p>
+      <div class="login-hint">🌿 Управление садовым инвентарём</div>
     </div>
   </div>
 </body>

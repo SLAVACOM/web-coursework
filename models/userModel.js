@@ -11,7 +11,7 @@ async function findByUsername(username) {
 async function findById(id) {
   log.db(`Получение данных пользователя по id: ${id}`);
   const [rows] = await db.execute(
-    'SELECT id, username, role, first_name, last_name, gender, department, phone, photo, created_at FROM users WHERE id = ?',
+    'SELECT id, username, role, is_super_admin, first_name, last_name, gender, department, phone, photo, created_at FROM users WHERE id = ?',
     [id]
   );
   return rows[0];
@@ -19,7 +19,7 @@ async function findById(id) {
 
 async function getAll() {
   const [rows] = await db.execute(
-    'SELECT id, username, role, created_at FROM users ORDER BY id'
+    'SELECT id, username, role, is_super_admin, created_at FROM users ORDER BY is_super_admin DESC, FIELD(role, "admin", "storekeeper", "user"), id'
   );
   return rows;
 }

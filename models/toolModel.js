@@ -1,9 +1,10 @@
 const log = require('../utils/logger');
 const db = require('../config/db');
 
-async function getAll({ search, category_id, condition, sort } = {}) {
-  log.db(`Получение списка инструментов`, { search, category_id, condition, sort });
-  let sql = `
+async function getAll({ search, category_id, condition, sort, page = 1, limit = 12 } = {}) {
+  log.db(`Получение списка инструментов`, { search, category_id, condition, sort, page, limit });
+
+  let baseSql = `
     SELECT t.*, c.name AS category_name,
            (SELECT filename FROM tool_images WHERE tool_id = t.id ORDER BY created_at LIMIT 1) AS image
     FROM tools t
@@ -13,29 +14,50 @@ async function getAll({ search, category_id, condition, sort } = {}) {
   const params = [];
 
   if (search) {
-    sql += ' AND (t.name LIKE ? OR t.description LIKE ?)';
+    baseSql += ' AND (t.name LIKE ? OR t.description LIKE ?)';
     params.push(`%${search}%`, `%${search}%`);
   }
   if (category_id) {
-    sql += ' AND t.category_id = ?';
+    baseSql += ' AND t.category_id = ?';
     params.push(category_id);
   }
   if (condition) {
-    sql += ' AND t.`condition` = ?';
+    baseSql += ' AND t.`condition` = ?';
     params.push(condition);
   }
 
   if (sort === 'quantity') {
-    sql += ' ORDER BY t.quantity DESC';
+    baseSql += ' ORDER BY t.quantity DESC';
   } else if (sort === 'condition') {
-    sql += ' ORDER BY FIELD(t.`condition`, "отличное", "хорошее", "удовлетворительное", "плохое") ASC';
+    baseSql += ' ORDER BY FIELD(t.`condition`, "отличное", "хорошее", "удовлетворительное", "плохое") ASC';
   } else {
-    sql += ' ORDER BY t.name ASC';
+    baseSql += ' ORDER BY t.name ASC';
   }
 
-  const [rows] = await db.execute(sql, params);
-  log.success(`Получено ${rows.length} инструментов`);
-  return rows;
+  // Подсчет всего
+  const countSql = `SELECT COUNT(*) as total FROM tools t LEFT JOIN categories c ON t.category_id = c.id WHERE 1=1` +
+    (search ? ' AND (t.name LIKE ? OR t.description LIKE ?)' : '') +
+    (category_id ? ' AND t.category_id = ?' : '') +
+    (condition ? ' AND t.`condition` = ?' : '');
+
+  const [countResult] = await db.execute(countSql, params.slice());
+  const total = countResult[0].total;
+  const totalPages = Math.ceil(total / limit);
+
+  // Пагинация
+  const offset = (page - 1) * limit;
+  const paginatedSql = baseSql + ` LIMIT ${limit} OFFSET ${offset}`;
+
+  const [rows] = await db.execute(paginatedSql, params);
+
+  log.success(`Получено ${rows.length} из ${total} инструментов (страница ${page}/${totalPages})`);
+  return {
+    data: rows,
+    total,
+    page: parseInt(page),
+    limit: parseInt(limit),
+    totalPages,
+  };
 }
 
 async function getById(id) {

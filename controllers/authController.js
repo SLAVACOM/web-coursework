@@ -17,7 +17,7 @@ async function login(req, res, next) {
       log.warn(`Неудачная попытка входа: ${username}`);
       return res.render('login', { error: 'Неверное имя пользователя или пароль' });
     }
-    req.session.user = { id: user.id, username: user.username, role: user.role };
+    req.session.user = { id: user.id, username: user.username, role: user.role, is_super_admin: !!user.is_super_admin };
     log.success(`Успешный вход: ${username} (id: ${user.id}, роль: ${user.role})`);
     res.redirect('/');
   } catch (err) { next(err); }
@@ -68,7 +68,7 @@ async function updateProfile(req, res, next) {
     });
 
     const updatedUser = await userModel.findById(req.session.user.id);
-    req.session.user = { id: updatedUser.id, username: updatedUser.username, role: updatedUser.role };
+    req.session.user = { id: updatedUser.id, username: updatedUser.username, role: updatedUser.role, is_super_admin: !!updatedUser.is_super_admin };
 
     log.success(`Профиль обновлен: ${req.session.user.username}`);
     res.redirect('/profile');

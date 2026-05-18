@@ -4,48 +4,109 @@
   <h1>Категории</h1>
 </div>
 
-<div class="two-col">
-  <div>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Название</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% if (categories.length === 0) { %>
-          <tr><td colspan="3" class="empty" style="padding:40px 0">Категорий пока нет</td></tr>
-        <% } %>
-        <% categories.forEach(c => { %>
-          <tr>
-            <td><%= c.id %></td>
-            <td><%= c.name %></td>
-            <td>
-              <form action="/categories/<%= c.id %>/delete" method="POST"
-                    onsubmit="return confirm('Удалить категорию «<%= c.name %>»?')">
-                <button type="submit" class="btn btn--sm btn--danger">Удалить</button>
-              </form>
-            </td>
-          </tr>
-        <% }) %>
-      </tbody>
-    </table>
+<div class="categories-toolbar">
+  <div class="categories-toolbar__info">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+    </svg>
+    Всего категорий: <strong><%= categories.length %></strong>
   </div>
+  <button type="button" class="btn btn--primary" id="openAddCategoryBtn">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="12" y1="5" x2="12" y2="19"/>
+      <line x1="5" y1="12" x2="19" y2="12"/>
+    </svg>
+    Добавить категорию
+  </button>
+</div>
 
-  <div class="sidebar-panel">
-    <div class="sidebar-panel__title">Добавить категорию</div>
-    <div class="sidebar-panel__body">
-      <form action="/categories" method="POST">
-        <div class="form-group">
-          <label for="name">Название *</label>
-          <input id="name" name="name" type="text" required placeholder="Например: Культиваторы">
+<% if (categories.length === 0) { %>
+  <div class="empty">
+    <span class="empty-icon">📂</span>
+    <div style="font-weight: 600; font-size: 1.1rem; color: var(--gray-700); margin-bottom: 4px;">Категорий пока нет</div>
+    <div>Создайте первую категорию для группировки инвентаря</div>
+  </div>
+<% } else { %>
+  <%
+    const palette = [
+      { bg: 'linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%)', color: '#166534', emoji: '🌱' },
+      { bg: 'linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%)', color: '#1e40af', emoji: '💧' },
+      { bg: 'linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)', color: '#92400e', emoji: '☀️' },
+      { bg: 'linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%)', color: '#9d174d', emoji: '🌸' },
+      { bg: 'linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%)', color: '#5b21b6', emoji: '🪴' },
+      { bg: 'linear-gradient(135deg, #cffafe 0%, #a5f3fc 100%)', color: '#155e75', emoji: '🌾' },
+      { bg: 'linear-gradient(135deg, #fed7aa 0%, #fdba74 100%)', color: '#9a3412', emoji: '🌻' },
+      { bg: 'linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%)', color: '#3730a3', emoji: '🍀' },
+    ];
+  %>
+  <div class="categories-grid">
+    <% categories.forEach((c, idx) => {
+      const p = palette[idx % palette.length];
+    %>
+      <div class="category-card">
+        <div class="category-card__icon" style="background: <%= p.bg %>; color: <%= p.color %>;">
+          <span class="category-card__emoji"><%= p.emoji %></span>
         </div>
-        <button type="submit" class="btn btn--primary btn--full">Добавить</button>
+        <div class="category-card__body">
+          <div class="category-card__id">#<%= c.id %></div>
+          <h3 class="category-card__name"><%= c.name %></h3>
+        </div>
+        <div class="category-card__actions">
+          <form action="/categories/<%= c.id %>/delete" method="POST"
+                onsubmit="return confirm('Удалить категорию «<%= c.name %>»?')">
+            <button type="submit" class="btn btn--sm btn--danger" title="Удалить">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="3 6 5 6 21 6"/>
+                <path d="M19 6l-2 14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L5 6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+              </svg>
+              Удалить
+            </button>
+          </form>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+<% } %>
+
+<!-- Модальное окно добавления категории -->
+<div class="modal" id="addCategoryModal">
+  <div class="modal-content" style="max-width: 480px;">
+    <div class="modal-header">
+      <h2>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -5px; color: var(--green); margin-right: 6px;">
+          <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+        </svg>
+        Новая категория
+      </h2>
+      <button type="button" class="modal-close" id="closeAddCategoryModal">&times;</button>
+    </div>
+    <div class="modal-body">
+      <form action="/categories" method="POST" class="user-form">
+        <div class="form-group">
+          <label for="name">Название категории *</label>
+          <input id="name" name="name" type="text" required autofocus placeholder="Например: Культиваторы">
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn--primary btn--full">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            Создать
+          </button>
+          <button type="button" class="btn btn--secondary btn--full" id="cancelAddCategoryBtn">Отмена</button>
+        </div>
       </form>
     </div>
   </div>
 </div>
 
 <%- include('partials/footer') %>
+
+<script>
+  const addCategoryModal = document.getElementById('addCategoryModal');
+  document.getElementById('openAddCategoryBtn').addEventListener('click', () => { addCategoryModal.style.display = 'block'; });
+  document.getElementById('closeAddCategoryModal').addEventListener('click', () => { addCategoryModal.style.display = 'none'; });
+  document.getElementById('cancelAddCategoryBtn').addEventListener('click', () => { addCategoryModal.style.display = 'none'; });
+  window.addEventListener('click', (e) => { if (e.target === addCategoryModal) addCategoryModal.style.display = 'none'; });
+  window.addEventListener('keydown', (e) => { if (e.key === 'Escape') addCategoryModal.style.display = 'none'; });
+</script>

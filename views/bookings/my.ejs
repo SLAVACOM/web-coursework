@@ -1,10 +1,11 @@
 <%- include('../partials/header') %>
 
-<div class="page-title">
-  <h1>Мои заявки</h1>
-</div>
+<div class="container">
+  <div class="page-title">
+    <h1>Мои заявки</h1>
+  </div>
 
-<nav class="seg-tabs">
+  <nav class="seg-tabs">
   <a href="/my-bookings" class="seg-tab <%= filterStatus==='' ? 'active' : '' %>">Все</a>
   <a href="/my-bookings?status=pending"  class="seg-tab <%= filterStatus==='pending'  ? 'active' : '' %>">Ожидает</a>
   <a href="/my-bookings?status=approved" class="seg-tab <%= filterStatus==='approved' ? 'active' : '' %>">Одобрено</a>
@@ -53,5 +54,6 @@
   </table>
 </div>
 <% } %>
+</div>
 
 <%- include('../partials/footer') %>

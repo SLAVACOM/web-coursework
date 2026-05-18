@@ -1,73 +1,39 @@
 $(function () {
-  const CONDITION_CLASS = {
-    'отличное':          'excellent',
-    'хорошее':           'good',
-    'удовлетворительное':'fair',
-    'плохое':            'poor',
-  };
+  function applyFilters() {
+    const params = new URLSearchParams();
+    const search = $('#search').val().trim();
+    const categoryId = $('#category-filter').val();
+    const condition = $('#condition-filter').val();
+    const sort = $('#sort-filter').val();
+    const limit = $('#limit-filter').val();
 
-  const canEdit = ['admin', 'storekeeper'].includes(window.APP_ROLE);
+    if (search) params.set('search', search);
+    if (categoryId) params.set('category_id', categoryId);
+    if (condition) params.set('condition', condition);
+    if (sort) params.set('sort', sort);
+    if (limit) params.set('limit', limit);
+    params.set('page', '1');
 
-  function renderTools(tools) {
-    const count = tools.length;
-    if (count === 0) {
-      $('#results-info').html('');
-      $('#tools-grid').html('<p class="empty"><span class="empty-icon">🔍</span>Инвентарь не найден</p>');
-      return;
-    }
-
-    $('#results-info').html(`<div class="results-info">Найдено: <strong>${count}</strong> товар${count % 10 === 1 && count % 100 !== 11 ? '' : count % 10 === 2 || count % 10 === 3 || count % 10 === 4 ? 'а' : 'ов'}</div>`);
-
-    const cards = tools.map(t => {
-      const cls    = CONDITION_CLASS[t.condition] || 'good';
-      const price  = t.price ? `<span>${Number(t.price).toLocaleString('ru-RU')} ₽</span>` : '';
-      const imgTag = t.image
-        ? `<img src="/uploads/${t.image}" alt="${t.name}">`
-        : `<div class="tool-card__img-placeholder">🌱</div>`;
-      const editBtn = canEdit
-        ? `<a href="/tools/${t.id}/edit" class="btn btn--sm btn--secondary">Изменить</a>`
-        : '';
-
-      return `
-        <div class="tool-card">
-          <a href="/tools/${t.id}" class="tool-card__img">${imgTag}</a>
-          <div class="tool-card__body">
-            <h3><a href="/tools/${t.id}">${t.name}</a></h3>
-            <span class="category-tag">${t.category_name || 'Без категории'}</span>
-            <span class="badge badge--${cls}">${t.condition}</span>
-          </div>
-          <div class="tool-card__meta">
-            <span>Кол-во: <strong>${t.quantity}</strong></span>
-            ${price}
-          </div>
-          <div class="tool-card__actions">
-            <a href="/tools/${t.id}" class="btn btn--sm">Просмотр</a>
-            ${editBtn}
-          </div>
-        </div>`;
-    });
-
-    $('#tools-grid').html(cards.join(''));
-  }
-
-  function loadTools() {
-    $.getJSON('/api/tools', {
-      search:      $('#search').val().trim(),
-      category_id: $('#category-filter').val(),
-      condition:   $('#condition-filter').val(),
-      sort:        $('#sort-filter').val(),
-    }, renderTools);
+    window.location.href = '?' + params.toString();
   }
 
   let debounceTimer;
   $('#search').on('input', function () {
     clearTimeout(debounceTimer);
-    debounceTimer = setTimeout(loadTools, 300);
+    debounceTimer = setTimeout(applyFilters, 500);
   });
 
-  $('#category-filter').on('change', loadTools);
-  $('#condition-filter').on('change', loadTools);
-  $('#sort-filter').on('change', loadTools);
+  $('#search').on('keydown', function (e) {
+    if (e.key === 'Enter') {
+      clearTimeout(debounceTimer);
+      applyFilters();
+    }
+  });
+
+  $('#category-filter').on('change', applyFilters);
+  $('#condition-filter').on('change', applyFilters);
+  $('#sort-filter').on('change', applyFilters);
+  $('#limit-filter').on('change', applyFilters);
 
   // Image gallery
   function switchToImage(index) {

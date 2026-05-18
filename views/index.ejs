@@ -1,11 +1,13 @@
 <%- include('partials/header') %>
 
-<div class="page-title">
-  <h1>Инвентарь</h1>
-</div>
+<div class="container">
+  <div class="hero-banner">
+    <div class="hero-banner__title">🌱 Каталог садового инвентаря</div>
+    <div class="hero-banner__subtitle">Всего <strong><%= total %></strong> позиций в инвентаре. Используйте фильтры, чтобы найти нужный инструмент.</div>
+  </div>
 
-<div class="filters">
-  <input id="search" type="text" placeholder="Поиск…" value="<%= search %>">
+  <div class="filters">
+  <input id="search" type="text" placeholder="🔍 Поиск по названию или описанию…" value="<%= search %>">
   <select id="category-filter">
     <option value="">Все категории</option>
     <% categories.forEach(c => { %>
@@ -26,16 +28,25 @@
     <option value="quantity" <%= sort === 'quantity' ? 'selected' : '' %>>По количеству</option>
     <option value="condition" <%= sort === 'condition' ? 'selected' : '' %>>По состоянию</option>
   </select>
+  <select id="limit-filter">
+    <option value="6" <%= String(limit) === '6' ? 'selected' : '' %>>6 на странице</option>
+    <option value="12" <%= String(limit) === '12' ? 'selected' : '' %>>12 на странице</option>
+    <option value="24" <%= String(limit) === '24' ? 'selected' : '' %>>24 на странице</option>
+    <option value="48" <%= String(limit) === '48' ? 'selected' : '' %>>48 на странице</option>
+  </select>
 </div>
 
-<div id="results-info"></div>
+<div class="pagination-info">
+  <span id="results-count">Показано <strong><%= (page - 1) * limit + 1 %></strong>–<strong><%= Math.min(page * limit, total) %></strong> из <strong><%= total %></strong></span>
+</div>
 
 <div id="tools-grid">
   <% if (tools.length === 0) { %>
-    <p class="empty">
+    <div class="empty" style="grid-column: 1/-1;">
       <span class="empty-icon">🔍</span>
-      Инвентарь не найден
-    </p>
+      <div style="font-weight: 600; font-size: 1.1rem; color: var(--gray-700); margin-bottom: 4px;">Ничего не найдено</div>
+      <div>Попробуйте изменить параметры поиска или фильтры</div>
+    </div>
   <% } else { %>
     <% tools.forEach(t => { %>
       <div class="tool-card">
@@ -54,20 +65,85 @@
           </span>
         </div>
         <div class="tool-card__meta">
-          <span>Кол-во: <strong><%= t.quantity %></strong></span>
+          <span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px;">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+            </svg>
+            <strong><%= t.quantity %></strong> шт.
+          </span>
           <% if (t.price) { %>
-            <span><%= Number(t.price).toLocaleString('ru-RU') %> ₽</span>
+            <span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px;">
+                <line x1="12" y1="1" x2="12" y2="23"/>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+              </svg>
+              <strong><%= Number(t.price).toLocaleString('ru-RU') %></strong> ₽
+            </span>
           <% } %>
         </div>
         <div class="tool-card__actions">
-          <a href="/tools/<%= t.id %>" class="btn btn--sm">Просмотр</a>
+          <a href="/tools/<%= t.id %>" class="btn btn--sm">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+            Просмотр
+          </a>
           <% if (user && (user.role === 'admin' || user.role === 'storekeeper')) { %>
-            <a href="/tools/<%= t.id %>/edit" class="btn btn--sm btn--secondary">Изменить</a>
+            <a href="/tools/<%= t.id %>/edit" class="btn btn--sm btn--secondary">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 20h9"/>
+                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+              </svg>
+              Изменить
+            </a>
           <% } %>
         </div>
       </div>
     <% }) %>
   <% } %>
+</div>
+
+<% if (totalPages > 1) { %>
+  <div class="pagination">
+  <% if (page > 1) { %>
+    <a href="?page=1&search=<%= search %>&category_id=<%= category_id %>&condition=<%= condition %>&sort=<%= sort %>&limit=<%= limit %>" class="pagination__btn pagination__btn--first">« Первая</a>
+    <a href="?page=<%= page - 1 %>&search=<%= search %>&category_id=<%= category_id %>&condition=<%= condition %>&sort=<%= sort %>&limit=<%= limit %>" class="pagination__btn pagination__btn--prev">‹ Предыдущая</a>
+  <% } %>
+
+  <div class="pagination__pages">
+    <%
+      const maxVisible = 5;
+      let start = Math.max(1, page - Math.floor(maxVisible / 2));
+      let end = Math.min(totalPages, start + maxVisible - 1);
+      if (end - start + 1 < maxVisible) start = Math.max(1, end - maxVisible + 1);
+    %>
+
+    <% if (start > 1) { %>
+      <a href="?page=1&search=<%= search %>&category_id=<%= category_id %>&condition=<%= condition %>&sort=<%= sort %>&limit=<%= limit %>" class="pagination__page">1</a>
+      <% if (start > 2) { %><span class="pagination__dots">…</span><% } %>
+    <% } %>
+
+    <% for (let i = start; i <= end; i++) { %>
+      <% if (i === page) { %>
+        <span class="pagination__page pagination__page--active"><%= i %></span>
+      <% } else { %>
+        <a href="?page=<%= i %>&search=<%= search %>&category_id=<%= category_id %>&condition=<%= condition %>&sort=<%= sort %>&limit=<%= limit %>" class="pagination__page"><%= i %></a>
+      <% } %>
+    <% } %>
+
+    <% if (end < totalPages) { %>
+      <% if (end < totalPages - 1) { %><span class="pagination__dots">…</span><% } %>
+      <a href="?page=<%= totalPages %>&search=<%= search %>&category_id=<%= category_id %>&condition=<%= condition %>&sort=<%= sort %>&limit=<%= limit %>" class="pagination__page"><%= totalPages %></a>
+    <% } %>
+  </div>
+
+  <% if (page < totalPages) { %>
+    <a href="?page=<%= page + 1 %>&search=<%= search %>&category_id=<%= category_id %>&condition=<%= condition %>&sort=<%= sort %>&limit=<%= limit %>" class="pagination__btn pagination__btn--next">Следующая ›</a>
+    <a href="?page=<%= totalPages %>&search=<%= search %>&category_id=<%= category_id %>&condition=<%= condition %>&sort=<%= sort %>&limit=<%= limit %>" class="pagination__btn pagination__btn--last">Последняя »</a>
+  <% } %>
+  </div>
+<% } %>
 </div>
 
 <%- include('partials/footer') %>
