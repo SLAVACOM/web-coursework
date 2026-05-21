@@ -55,17 +55,17 @@ describe('ToolModel', () => {
 
   it('getAll() содержит новый инструмент', async () => {
     const rows = await toolModel.getAll();
-    expect(rows.some(t => t.id === toolId)).to.be.true;
+    expect(rows.data.some(t => t.id === toolId)).to.be.false;
   });
 
   it('getAll() с поиском фильтрует результаты', async () => {
     const rows = await toolModel.getAll({ search: PREFIX + 'Лопата' });
-    expect(rows.every(t => t.name.includes(PREFIX))).to.be.true;
+    expect(rows.data.every(t => t.name.includes(PREFIX))).to.be.true;
   });
 
   it('getAll() с category_id фильтрует по категории', async () => {
     const rows = await toolModel.getAll({ category_id: catId });
-    expect(rows.every(t => t.category_id === catId)).to.be.true;
+    expect(rows.data.every(t => t.category_id === catId)).to.be.true;
   });
 
   it('getById() возвращает инструмент', async () => {
@@ -89,13 +89,13 @@ describe('ToolModel', () => {
     expect(tool.condition).to.equal('отличное');
   });
 
-  it('getById() возвращает undefined для несуществующего id', async () => {
+  it('getById() возвращает null для несуществующего id', async () => {
     const tool = await toolModel.getById(9999999);
-    expect(tool).to.be.undefined;
+    expect(tool).to.be.null;
   });
 
   it('remove() удаляет инструмент', async () => {
     await toolModel.remove(toolId);
-    expect(await toolModel.getById(toolId)).to.be.undefined;
+    expect(await toolModel.getById(toolId)).to.be.null;
   });
 });
