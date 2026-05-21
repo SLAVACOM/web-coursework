@@ -25,11 +25,11 @@ async function seedDatabase() {
     const users = [];
     const password = await bcrypt.hash('password123', 10);
 
-    // Создаём admin
+    // Создаём супер-администратора
     let [result] = await db.execute(
-      `INSERT INTO users (username, password, role, first_name, last_name, gender, department, phone)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-      ['admin', password, 'admin', 'Администратор', 'Системы', 'М', 'Администрация', '+7 (999) 000-00-00']
+      `INSERT INTO users (username, password, role, is_super_admin, first_name, last_name, gender, department, phone)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      ['admin', password, 'admin', true, 'Администратор', 'Системы', 'М', 'Администрация', '+7 (999) 000-00-00']
     );
     users.push({ id: result.insertId, username: 'admin', firstName: 'Администратор', lastName: 'Системы' });
 
@@ -109,7 +109,7 @@ async function seedDatabase() {
 
     console.log('✅ Заполнение БД завершено успешно!');
     console.log('\n📝 Учётные данные для тестирования:');
-    console.log('   Admin:      admin / password123');
+    console.log('   Super Admin: admin / password123 (is_super_admin = true)');
     console.log('   Storekeeper: storekeeper / password123');
     console.log('\n📋 Созданные пользователи:');
     users.slice(2).forEach((u, i) => {

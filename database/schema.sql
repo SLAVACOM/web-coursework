@@ -61,6 +61,19 @@ CREATE TABLE IF NOT EXISTS bookings (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
+DELIMITER $$
+CREATE TRIGGER prevent_super_admin_delete
+BEFORE DELETE ON users
+FOR EACH ROW
+BEGIN
+  IF OLD.is_super_admin = TRUE THEN
+    SIGNAL SQLSTATE '45000'
+      SET MESSAGE_TEXT = 'Удаление суперадминистратора запрещено';
+  END IF;
+END$$
+DELIMITER ;
+
+
 INSERT INTO categories (name) VALUES
   ('Лопаты'),
   ('Грабли'),
