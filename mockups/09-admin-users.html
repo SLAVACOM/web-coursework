@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Макет: Пользователи</title>
+  <link rel="stylesheet" href="wireframe.css">
+</head>
+<body>
+  <div class="wf-page">
+    <div class="wf-header">
+      <div class="wf-logo">[ ЛОГО ] Садовый инвентарь</div>
+      <div class="wf-nav">
+        <span>Инвентарь</span>
+        <span>Категории</span>
+        <span>Заявки</span>
+        <span>Аналитика</span>
+        <span>Пользователи</span>
+        <span class="user">[ Админ ] логин</span>
+      </div>
+    </div>
+
+    <div class="wf-title">
+      <h1>Пользователи</h1>
+    </div>
+
+    <!-- Статистика по ролям -->
+    <div class="wf-kpi-grid">
+      <div class="wf-kpi">
+        <div class="wf-kpi-icon">★</div>
+        <div>
+          <div class="wf-kpi-val">N</div>
+          <div class="wf-kpi-lbl">Администраторы</div>
+        </div>
+      </div>
+      <div class="wf-kpi">
+        <div class="wf-kpi-icon">⬢</div>
+        <div>
+          <div class="wf-kpi-val">N</div>
+          <div class="wf-kpi-lbl">Кладовщики</div>
+        </div>
+      </div>
+      <div class="wf-kpi">
+        <div class="wf-kpi-icon">☺</div>
+        <div>
+          <div class="wf-kpi-val">N</div>
+          <div class="wf-kpi-lbl">Пользователи</div>
+        </div>
+      </div>
+      <div class="wf-kpi">
+        <div class="wf-kpi-icon">Σ</div>
+        <div>
+          <div class="wf-kpi-val">N</div>
+          <div class="wf-kpi-lbl">Всего</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px;">
+      <div style="display:flex;gap:8px;flex-wrap:wrap;flex:1;">
+        <input class="wf-input search" placeholder="Поиск по логину…" style="max-width:280px;">
+        <div class="wf-tabs" style="margin-bottom:0;border:none;">
+          <div class="wf-tab active">Все</div>
+          <div class="wf-tab">Админы</div>
+          <div class="wf-tab">Кладовщики</div>
+          <div class="wf-tab">Пользователи</div>
+        </div>
+      </div>
+      <div class="wf-btn primary">+ Добавить пользователя</div>
+    </div>
+
+    <table class="wf-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Логин</th>
+          <th>Имя</th>
+          <th>Email</th>
+          <th>Роль</th>
+          <th>Регистрация</th>
+          <th>Действия</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>username</td>
+          <td>Имя Фамилия</td>
+          <td>email@example.com</td>
+          <td><select class="wf-select" style="min-width:auto;"><option>Админ</option></select></td>
+          <td>ДД.ММ.ГГ</td>
+          <td>
+            <span class="wf-btn" style="padding:3px 8px;font-size:11px;">Изменить</span>
+            <span class="wf-btn danger" style="padding:3px 8px;font-size:11px;">Удалить</span>
+          </td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>username</td>
+          <td>Имя Фамилия</td>
+          <td>email@example.com</td>
+          <td><select class="wf-select" style="min-width:auto;"><option>Кладовщик</option></select></td>
+          <td>ДД.ММ.ГГ</td>
+          <td>
+            <span class="wf-btn" style="padding:3px 8px;font-size:11px;">Изменить</span>
+            <span class="wf-btn danger" style="padding:3px 8px;font-size:11px;">Удалить</span>
+          </td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>username</td>
+          <td>Имя Фамилия</td>
+          <td>email@example.com</td>
+          <td><select class="wf-select" style="min-width:auto;"><option>Гость</option></select></td>
+          <td>ДД.ММ.ГГ</td>
+          <td>
+            <span class="wf-btn" style="padding:3px 8px;font-size:11px;">Изменить</span>
+            <span class="wf-btn danger" style="padding:3px 8px;font-size:11px;">Удалить</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="wf-footer">
+      Садовый инвентарь &copy; 2026 ·
+      <a href="index.html">К списку макетов</a>
+    </div>
+  </div>
+</body>
+</html>

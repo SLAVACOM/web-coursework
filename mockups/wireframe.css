@@ -1,0 +1,411 @@
+/* Wireframe styles — простые макеты без финального дизайна.
+   Только серая шкала, штриховые границы, плейсхолдеры — для коУрсовой. */
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  color: #222;
+  background: #fafafa;
+  line-height: 1.4;
+}
+
+.wf-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+/* ---------- Header ---------- */
+.wf-header {
+  border: 1px solid #999;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  margin-bottom: 16px;
+}
+.wf-logo { font-weight: bold; }
+.wf-nav { display: flex; gap: 12px; flex-wrap: wrap; }
+.wf-nav span { padding: 4px 10px; border: 1px solid #bbb; border-radius: 4px; font-size: 12px; background: #f0f0f0; }
+.wf-nav span.primary { background: #333; color: #fff; border-color: #333; }
+.wf-nav span.user { background: #fff; }
+
+/* ---------- Title block ---------- */
+.wf-title {
+  margin-bottom: 14px;
+  border-bottom: 1px dashed #aaa;
+  padding-bottom: 8px;
+}
+.wf-title h1 { font-size: 22px; font-weight: bold; }
+.wf-back { font-size: 12px; color: #666; display: inline-block; margin-right: 8px; }
+
+/* ---------- Generic block ---------- */
+.wf-box {
+  border: 1px dashed #888;
+  background: #fff;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+.wf-box-solid {
+  border: 1px solid #888;
+  background: #fff;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+.wf-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #666;
+  margin-bottom: 6px;
+}
+
+/* ---------- Hero banner ---------- */
+.wf-hero {
+  border: 1px dashed #888;
+  background: #f0f0f0;
+  padding: 24px;
+  margin-bottom: 14px;
+  text-align: left;
+}
+.wf-hero h2 { font-size: 18px; margin-bottom: 4px; }
+.wf-hero p { color: #555; font-size: 13px; }
+
+/* ---------- Filters ---------- */
+.wf-filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  border: 1px dashed #888;
+  background: #fff;
+  padding: 10px;
+  margin-bottom: 12px;
+}
+.wf-input, .wf-select {
+  flex: 1;
+  min-width: 140px;
+  border: 1px solid #aaa;
+  padding: 6px 10px;
+  background: #fff;
+  font-size: 12px;
+  color: #555;
+}
+.wf-input.search { flex: 2; }
+
+/* ---------- Tool grid ---------- */
+.wf-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 14px;
+  margin-bottom: 14px;
+}
+.wf-card {
+  border: 1px dashed #888;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.wf-card-img {
+  height: 130px;
+  background: repeating-linear-gradient(45deg, #eee, #eee 8px, #f5f5f5 8px, #f5f5f5 16px);
+  border-bottom: 1px dashed #aaa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+  font-size: 11px;
+}
+.wf-card-body { padding: 10px; }
+.wf-card-body h3 { font-size: 14px; margin-bottom: 4px; }
+.wf-card-meta { font-size: 12px; color: #666; }
+.wf-card-actions { padding: 8px 10px; border-top: 1px dashed #aaa; display: flex; gap: 6px; }
+
+/* ---------- Tags / badges ---------- */
+.wf-tag {
+  display: inline-block;
+  border: 1px solid #aaa;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  background: #f0f0f0;
+  margin-right: 4px;
+  color: #444;
+}
+
+/* ---------- Buttons ---------- */
+.wf-btn {
+  display: inline-block;
+  padding: 6px 12px;
+  border: 1px solid #777;
+  background: #fff;
+  font-size: 12px;
+  text-align: center;
+  cursor: default;
+}
+.wf-btn.primary { background: #333; color: #fff; border-color: #333; }
+.wf-btn.danger { background: #fff; border: 1px solid #999; color: #555; font-style: italic; }
+.wf-btn.full { width: 100%; }
+
+/* ---------- Pagination ---------- */
+.wf-pagination {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  margin: 14px 0;
+}
+.wf-page-num {
+  border: 1px solid #aaa;
+  padding: 4px 10px;
+  font-size: 12px;
+  background: #fff;
+}
+.wf-page-num.active { background: #333; color: #fff; border-color: #333; }
+
+/* ---------- Detail layout ---------- */
+.wf-detail {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 16px;
+}
+@media (max-width: 768px) { .wf-detail { grid-template-columns: 1fr; } }
+
+.wf-gallery-main {
+  height: 280px;
+  border: 1px dashed #888;
+  background: repeating-linear-gradient(45deg, #eee, #eee 10px, #f5f5f5 10px, #f5f5f5 20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+.wf-gallery-thumbs { display: flex; gap: 6px; margin-bottom: 14px; }
+.wf-thumb {
+  width: 60px;
+  height: 60px;
+  border: 1px dashed #aaa;
+  background: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: #888;
+}
+
+.wf-info-row {
+  display: flex;
+  padding: 8px 0;
+  border-bottom: 1px dashed #ddd;
+  font-size: 13px;
+}
+.wf-info-row .k { width: 130px; color: #666; font-size: 11px; text-transform: uppercase; }
+
+/* ---------- Form ---------- */
+.wf-form { background: #fff; border: 1px dashed #888; padding: 16px; }
+.wf-fg { margin-bottom: 12px; }
+.wf-fg label { display: block; font-size: 12px; margin-bottom: 4px; font-weight: bold; }
+.wf-fg input, .wf-fg select, .wf-fg textarea {
+  width: 100%;
+  border: 1px solid #aaa;
+  padding: 6px 10px;
+  font-size: 13px;
+  background: #fff;
+  color: #555;
+  font-family: inherit;
+}
+.wf-fg textarea { min-height: 70px; resize: vertical; }
+.wf-row { display: flex; gap: 12px; }
+.wf-row .wf-fg { flex: 1; }
+.wf-upload {
+  border: 2px dashed #aaa;
+  padding: 24px;
+  text-align: center;
+  color: #888;
+  background: #f9f9f9;
+  font-size: 12px;
+}
+.wf-actions { display: flex; gap: 8px; margin-top: 8px; }
+
+/* ---------- Tabs ---------- */
+.wf-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid #aaa;
+}
+.wf-tab {
+  padding: 6px 12px;
+  border: 1px solid #aaa;
+  border-bottom: none;
+  background: #f0f0f0;
+  font-size: 12px;
+  color: #555;
+}
+.wf-tab.active { background: #fff; color: #000; font-weight: bold; }
+
+/* ---------- Table ---------- */
+.wf-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border: 1px dashed #888;
+  font-size: 12px;
+}
+.wf-table th, .wf-table td {
+  border: 1px dashed #ccc;
+  padding: 8px 10px;
+  text-align: left;
+}
+.wf-table th { background: #f0f0f0; font-size: 11px; text-transform: uppercase; color: #555; }
+
+/* ---------- KPI cards ---------- */
+.wf-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.wf-kpi {
+  border: 1px dashed #888;
+  background: #fff;
+  padding: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.wf-kpi-icon {
+  width: 36px;
+  height: 36px;
+  border: 1px solid #aaa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0f0f0;
+  font-size: 16px;
+}
+.wf-kpi-val { font-size: 20px; font-weight: bold; }
+.wf-kpi-lbl { font-size: 11px; color: #666; text-transform: uppercase; }
+
+/* ---------- Chart placeholder ---------- */
+.wf-chart {
+  border: 1px dashed #888;
+  background: #fff;
+  padding: 14px;
+  margin-bottom: 12px;
+}
+.wf-chart-area {
+  height: 220px;
+  background: repeating-linear-gradient(0deg, transparent, transparent 36px, #eee 36px, #eee 37px),
+              repeating-linear-gradient(90deg, transparent, transparent 70px, #eee 70px, #eee 71px);
+  border: 1px solid #ccc;
+  display: flex;
+  align-items: end;
+  justify-content: space-around;
+  padding: 10px;
+}
+.wf-bar {
+  width: 30px;
+  background: #999;
+  border: 1px solid #555;
+}
+.wf-chart-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 768px) { .wf-chart-row { grid-template-columns: 1fr; } }
+
+/* ---------- Profile ---------- */
+.wf-profile-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media (max-width: 768px) { .wf-profile-layout { grid-template-columns: 1fr; } }
+.wf-profile-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 20px;
+  border-bottom: 1px dashed #aaa;
+  background: #f5f5f5;
+}
+.wf-avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border: 1px dashed #888;
+  background: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+  font-size: 11px;
+}
+
+/* ---------- Login ---------- */
+.wf-login-wrap {
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.wf-login-card {
+  width: 100%;
+  max-width: 380px;
+  border: 1px dashed #888;
+  background: #fff;
+  padding: 28px;
+}
+
+/* ---------- Footer ---------- */
+.wf-footer {
+  margin-top: 18px;
+  border-top: 1px dashed #aaa;
+  padding: 10px;
+  text-align: center;
+  font-size: 11px;
+  color: #888;
+}
+
+/* ---------- Index of mockups ---------- */
+.wf-index-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+}
+.wf-index-card {
+  border: 1px dashed #888;
+  background: #fff;
+  padding: 14px;
+  text-decoration: none;
+  color: #222;
+  display: block;
+}
+.wf-index-card:hover { background: #f5f5f5; }
+.wf-index-card h3 { font-size: 14px; margin-bottom: 4px; }
+.wf-index-card p { font-size: 12px; color: #666; }
+
+/* ---------- Categories grid ---------- */
+.wf-cat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+}
+.wf-cat-card {
+  border: 1px dashed #888;
+  background: #fff;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.wf-cat-icon {
+  width: 48px;
+  height: 48px;
+  border: 1px dashed #aaa;
+  background: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: #888;
+}

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Макет: Карточка инструмента</title>
+  <link rel="stylesheet" href="wireframe.css">
+</head>
+<body>
+  <div class="wf-page">
+    <div class="wf-header">
+      <div class="wf-logo">[ ЛОГО ] Садовый инвентарь</div>
+      <div class="wf-nav">
+        <span>Инвентарь</span>
+        <span>Мои заявки</span>
+        <span class="user">[ роль ] логин</span>
+        <span>Выйти</span>
+      </div>
+    </div>
+
+    <div class="wf-title">
+      <a class="wf-back" href="02-catalog.html">← Назад</a>
+      <h1 style="display:inline-block;">Название инструмента</h1>
+    </div>
+
+    <div class="wf-detail">
+      <!-- Левая колонка -->
+      <div>
+        <div class="wf-gallery-main">[ основное фото 640×440 ]</div>
+        <div class="wf-gallery-thumbs">
+          <div class="wf-thumb">фото 1</div>
+          <div class="wf-thumb">фото 2</div>
+          <div class="wf-thumb">фото 3</div>
+          <div class="wf-thumb">фото 4</div>
+        </div>
+
+        <div class="wf-box-solid">
+          <div class="wf-info-row"><span class="k">Категория</span><span>Название категории</span></div>
+          <div class="wf-info-row"><span class="k">Состояние</span><span class="wf-tag">состояние</span></div>
+          <div class="wf-info-row"><span class="k">Всего</span><span>N шт.</span></div>
+          <div class="wf-info-row"><span class="k">Доступно</span><span>N шт.</span></div>
+          <div class="wf-info-row"><span class="k">Стоимость</span><span>NN ₽</span></div>
+          <div class="wf-info-row"><span class="k">Дата покупки</span><span>ДД.ММ.ГГГГ</span></div>
+          <div class="wf-info-row" style="display:block;">
+            <div class="k" style="width:auto;margin-bottom:6px;">Описание</div>
+            <div>Текст описания инструмента…</div>
+          </div>
+        </div>
+
+        <div class="wf-actions">
+          <div class="wf-btn primary">Редактировать</div>
+          <div class="wf-btn danger">Удалить</div>
+        </div>
+      </div>
+
+      <!-- Правая колонка: бронирование -->
+      <div>
+        <div class="wf-box-solid" style="position:sticky;top:12px;">
+          <h2 style="font-size:16px;margin-bottom:12px;border-bottom:1px dashed #aaa;padding-bottom:8px;">Забронировать</h2>
+
+          <div class="wf-fg">
+            <label>Количество <span style="font-weight:normal;color:#888;">(доступно: N)</span></label>
+            <input type="number" value="1">
+          </div>
+          <div class="wf-fg">
+            <label>Примечание</label>
+            <textarea placeholder="Для каких работ нужен инструмент…"></textarea>
+          </div>
+
+          <div class="wf-btn primary full">Забронировать</div>
+
+          <div style="text-align:center;margin-top:12px;font-size:12px;">→ Мои заявки</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="wf-footer">
+      Садовый инвентарь &copy; 2026 ·
+      <a href="index.html">К списку макетов</a>
+    </div>
+  </div>
+</body>
+</html>

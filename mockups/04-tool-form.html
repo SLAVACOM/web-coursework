@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Макет: Форма инструмента</title>
+  <link rel="stylesheet" href="wireframe.css">
+</head>
+<body>
+  <div class="wf-page">
+    <div class="wf-header">
+      <div class="wf-logo">[ ЛОГО ] Садовый инвентарь</div>
+      <div class="wf-nav">
+        <span>Инвентарь</span>
+        <span>Категории</span>
+        <span>Заявки</span>
+        <span class="user">[ роль ] логин</span>
+      </div>
+    </div>
+
+    <div class="wf-title">
+      <a class="wf-back" href="02-catalog.html">← Назад</a>
+      <h1 style="display:inline-block;">Новый инструмент / Редактировать</h1>
+    </div>
+
+    <div class="wf-form" style="max-width:720px;">
+      <div class="wf-fg">
+        <label>Название *</label>
+        <input type="text" placeholder="Например: Лопата штыковая">
+      </div>
+
+      <div class="wf-row">
+        <div class="wf-fg">
+          <label>Категория</label>
+          <select><option>— Без категории —</option></select>
+        </div>
+        <div class="wf-fg">
+          <label>Состояние *</label>
+          <select><option>хорошее</option></select>
+        </div>
+      </div>
+
+      <div class="wf-row">
+        <div class="wf-fg">
+          <label>Количество *</label>
+          <input type="number" value="1">
+        </div>
+        <div class="wf-fg">
+          <label>Стоимость (₽)</label>
+          <input type="number" placeholder="0.00">
+        </div>
+        <div class="wf-fg">
+          <label>Дата покупки</label>
+          <input type="text" placeholder="ДД.ММ.ГГГГ">
+        </div>
+      </div>
+
+      <div class="wf-fg">
+        <label>Описание</label>
+        <textarea placeholder="Краткое описание инструмента"></textarea>
+      </div>
+
+      <div class="wf-fg">
+        <label>Фотографии</label>
+        <div style="background:#f5f5f5;border:1px dashed #aaa;padding:12px;margin-bottom:10px;">
+          <div style="font-size:11px;color:#666;margin-bottom:8px;">Существующие фотографии (можно перетащить для смены порядка):</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px;">
+            <div class="wf-thumb">фото 1</div>
+            <div class="wf-thumb">фото 2</div>
+            <div class="wf-thumb">фото 3</div>
+          </div>
+        </div>
+        <div class="wf-upload">
+          [ 📸 ]<br>
+          Нажмите для выбора файлов или перетащите сюда
+        </div>
+      </div>
+
+      <div class="wf-actions">
+        <div class="wf-btn primary">Сохранить</div>
+        <div class="wf-btn">Отмена</div>
+      </div>
+    </div>
+
+    <div class="wf-footer">
+      Садовый инвентарь &copy; 2026 ·
+      <a href="index.html">К списку макетов</a>
+    </div>
+  </div>
+</body>
+</html>

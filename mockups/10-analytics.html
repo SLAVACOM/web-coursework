@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Макет: Аналитика</title>
+  <link rel="stylesheet" href="wireframe.css">
+</head>
+<body>
+  <div class="wf-page">
+    <div class="wf-header">
+      <div class="wf-logo">[ ЛОГО ] Садовый инвентарь</div>
+      <div class="wf-nav">
+        <span>Инвентарь</span>
+        <span>Категории</span>
+        <span>Заявки</span>
+        <span>Аналитика</span>
+        <span>Пользователи</span>
+        <span class="user">[ Админ ] логин</span>
+      </div>
+    </div>
+
+    <!-- Hero -->
+    <div class="wf-hero" style="display:flex;justify-content:space-between;align-items:center;">
+      <div>
+        <h2>📊 Панель аналитики</h2>
+        <p>Обзор инвентаря, активности и пользователей в реальном времени</p>
+      </div>
+      <div class="wf-tag" style="background:#fff;">📅 ДД месяц ГГГГ</div>
+    </div>
+
+    <!-- KPI -->
+    <div class="wf-kpi-grid">
+      <div class="wf-kpi">
+        <div class="wf-kpi-icon">⬢</div>
+        <div>
+          <div class="wf-kpi-val">N</div>
+          <div class="wf-kpi-lbl">Всего позиций</div>
+          <div style="font-size:10px;color:#888;">уникальных инструментов</div>
+        </div>
+      </div>
+      <div class="wf-kpi">
+        <div class="wf-kpi-icon">▦</div>
+        <div>
+          <div class="wf-kpi-val">N</div>
+          <div class="wf-kpi-lbl">Общее количество</div>
+          <div style="font-size:10px;color:#888;">единиц на складе</div>
+        </div>
+      </div>
+      <div class="wf-kpi">
+        <div class="wf-kpi-icon">₽</div>
+        <div>
+          <div class="wf-kpi-val">N ₽</div>
+          <div class="wf-kpi-lbl">Стоимость</div>
+          <div style="font-size:10px;color:#888;">общая оценка</div>
+        </div>
+      </div>
+      <div class="wf-kpi">
+        <div class="wf-kpi-icon">!</div>
+        <div>
+          <div class="wf-kpi-val">N</div>
+          <div class="wf-kpi-lbl">Низкий запас</div>
+          <div style="font-size:10px;color:#888;">требуют пополнения</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Главный график -->
+    <div class="wf-chart">
+      <div style="margin-bottom:8px;">
+        <strong>📈 Активность бронирований</strong>
+        <div style="font-size:11px;color:#666;">Динамика заявок по месяцам</div>
+      </div>
+      <div class="wf-chart-area">
+        <div class="wf-bar" style="height:30%;"></div>
+        <div class="wf-bar" style="height:55%;"></div>
+        <div class="wf-bar" style="height:40%;"></div>
+        <div class="wf-bar" style="height:70%;"></div>
+        <div class="wf-bar" style="height:60%;"></div>
+        <div class="wf-bar" style="height:85%;"></div>
+        <div class="wf-bar" style="height:50%;"></div>
+        <div class="wf-bar" style="height:75%;"></div>
+        <div class="wf-bar" style="height:65%;"></div>
+        <div class="wf-bar" style="height:90%;"></div>
+        <div class="wf-bar" style="height:45%;"></div>
+        <div class="wf-bar" style="height:80%;"></div>
+      </div>
+    </div>
+
+    <!-- Сетка дополнительных диаграмм -->
+    <div class="wf-chart-row">
+      <div class="wf-chart">
+        <div style="margin-bottom:8px;">
+          <strong>🗂 По категориям</strong>
+          <div style="font-size:11px;color:#666;">Распределение позиций</div>
+        </div>
+        <div class="wf-chart-area" style="align-items:center;justify-content:center;">
+          <div style="width:160px;height:160px;border:2px dashed #888;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;color:#888;">[ круговая ]</div>
+        </div>
+      </div>
+
+      <div class="wf-chart">
+        <div style="margin-bottom:8px;">
+          <strong>⭐ По состоянию</strong>
+          <div style="font-size:11px;color:#666;">Качество инвентаря</div>
+        </div>
+        <div class="wf-chart-area" style="align-items:center;justify-content:center;">
+          <div style="width:160px;height:160px;border:2px dashed #888;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;color:#888;">[ круговая ]</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Топ инструментов / низкий запас -->
+    <div class="wf-chart-row">
+      <div class="wf-box-solid">
+        <h3 style="font-size:14px;margin-bottom:10px;">🏆 Топ инструментов</h3>
+        <table class="wf-table">
+          <thead><tr><th>Инструмент</th><th>Заявок</th></tr></thead>
+          <tbody>
+            <tr><td>Название</td><td>N</td></tr>
+            <tr><td>Название</td><td>N</td></tr>
+            <tr><td>Название</td><td>N</td></tr>
+            <tr><td>Название</td><td>N</td></tr>
+            <tr><td>Название</td><td>N</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="wf-box-solid">
+        <h3 style="font-size:14px;margin-bottom:10px;">⚠ Низкий запас</h3>
+        <table class="wf-table">
+          <thead><tr><th>Инструмент</th><th>Остаток</th></tr></thead>
+          <tbody>
+            <tr><td>Название</td><td>1 шт.</td></tr>
+            <tr><td>Название</td><td>2 шт.</td></tr>
+            <tr><td>Название</td><td>0 шт.</td></tr>
+            <tr><td>Название</td><td>1 шт.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="wf-footer">
+      Садовый инвентарь &copy; 2026 ·
+      <a href="index.html">К списку макетов</a>
+    </div>
+  </div>
+</body>
+</html>
