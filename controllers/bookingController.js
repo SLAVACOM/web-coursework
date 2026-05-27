@@ -14,9 +14,28 @@ const STATUSES = Object.keys(STATUS_LABELS);
 // Кладовщик/Админ: все заявки
 async function list(req, res, next) {
   try {
+    const ALLOWED_SORTS = ['date_desc', 'date_asc', 'status', 'user', 'tool', 'quantity'];
+    const ALLOWED_LIMITS = [10, 25, 50, 100];
+
     const status = STATUSES.includes(req.query.status) ? req.query.status : undefined;
-    const bookings = await bookingModel.getAll({ status });
-    res.render('bookings/list', { bookings, statusLabels: STATUS_LABELS, filterStatus: status || '' });
+    const search = (req.query.search || '').trim();
+    const sort   = ALLOWED_SORTS.includes(req.query.sort) ? req.query.sort : 'date_desc';
+    const limit  = ALLOWED_LIMITS.includes(parseInt(req.query.limit)) ? parseInt(req.query.limit) : 10;
+    const page   = Math.max(1, parseInt(req.query.page) || 1);
+
+    const result = await bookingModel.getAll({ status, search, sort, page, limit });
+
+    res.render('bookings/list', {
+      bookings: result.data,
+      statusLabels: STATUS_LABELS,
+      filterStatus: status || '',
+      search,
+      sort,
+      page: result.page,
+      limit: result.limit,
+      total: result.total,
+      totalPages: result.totalPages,
+    });
   } catch (err) { next(err); }
 }
 

@@ -1,23 +1,65 @@
 const log = require('../utils/logger');
 const db = require('../config/db');
 
-async function getAll({ status } = {}) {
-  log.db(`Получение списка бронирований`, { status: status || 'все' });
-  let sql = `
+async function getAll({ status, search, sort, page = 1, limit = 10 } = {}) {
+  log.db(`Получение списка бронирований`, { status: status || 'все', search, sort, page, limit });
+
+  const where = ['1=1'];
+  const params = [];
+
+  if (status) { where.push('b.status = ?'); params.push(status); }
+  if (search) {
+    where.push('(u.username LIKE ? OR t.name LIKE ? OR b.note LIKE ?)');
+    const like = `%${search}%`;
+    params.push(like, like, like);
+  }
+
+  const whereSql = where.join(' AND ');
+
+  let orderSql;
+  switch (sort) {
+    case 'date_asc':   orderSql = 'b.created_at ASC'; break;
+    case 'status':     orderSql = "FIELD(b.status, 'pending','approved','issued','returned','rejected'), b.created_at DESC"; break;
+    case 'user':       orderSql = 'u.username ASC, b.created_at DESC'; break;
+    case 'tool':       orderSql = 't.name ASC, b.created_at DESC'; break;
+    case 'quantity':   orderSql = 'b.quantity DESC, b.created_at DESC'; break;
+    case 'date_desc':
+    default:           orderSql = 'b.created_at DESC';
+  }
+
+  const countSql = `
+    SELECT COUNT(*) AS total
+    FROM bookings b
+    JOIN users u ON b.user_id = u.id
+    JOIN tools t ON b.tool_id = t.id
+    WHERE ${whereSql}
+  `;
+  const [countRows] = await db.execute(countSql, params);
+  const total = countRows[0].total;
+  const totalPages = Math.max(1, Math.ceil(total / limit));
+  const safePage = Math.min(Math.max(1, parseInt(page) || 1), totalPages);
+  const offset = (safePage - 1) * limit;
+
+  const sql = `
     SELECT b.*, u.username,
            t.name AS tool_name,
            (SELECT filename FROM tool_images WHERE tool_id = t.id ORDER BY created_at LIMIT 1) AS tool_image
     FROM bookings b
     JOIN users u ON b.user_id = u.id
     JOIN tools  t ON b.tool_id = t.id
-    WHERE 1=1
+    WHERE ${whereSql}
+    ORDER BY ${orderSql}
+    LIMIT ${parseInt(limit)} OFFSET ${offset}
   `;
-  const params = [];
-  if (status) { sql += ' AND b.status = ?'; params.push(status); }
-  sql += ' ORDER BY b.created_at DESC';
   const [rows] = await db.execute(sql, params);
-  log.success(`Получено ${rows.length} бронирований`);
-  return rows;
+  log.success(`Получено ${rows.length} из ${total} бронирований (страница ${safePage}/${totalPages})`);
+  return {
+    data: rows,
+    total,
+    page: safePage,
+    limit: parseInt(limit),
+    totalPages,
+  };
 }
 
 async function getByUser(userId, { status } = {}) {
